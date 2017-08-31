@@ -4,7 +4,7 @@ import * as actions from './actions';
 import * as getters from './getters';
 import member from './modules/member';
 import anthology from './modules/anthology.js';
-import article from './modules/article.js';
+import content from './modules/content.js';
 
 
 Vue.use(Vuex);
@@ -19,7 +19,7 @@ export default new Vuex.Store({
   modules: {
     member,
     anthology,
-    article,
+    content,
   },
   stric: debug,
 });

@@ -17,9 +17,13 @@ function initAnthology() {
       needFetch: true,
       lastTime: '',
       byId: {
-
+        '1': {
+          id: 1,
+          author: 1,
+          title: '前端资讯',
+        },
       },
-      all: [],
+      all: [1],
     }
   }
 }

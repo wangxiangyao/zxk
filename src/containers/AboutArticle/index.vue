@@ -72,7 +72,7 @@ export default {
       }
       let anthology = {
         title: this.newAnthology,
-        author: state.member.id,
+        authorId: state.member.id,
       }
       dispatch('addAnthology', anthology);
     },

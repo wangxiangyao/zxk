@@ -1,9 +1,11 @@
 import {
   MEMBER_LOGIN_SUCCESS,
   MEMBER_LOGIN_RE,
+  MEMBER_RECEIVE,
 } from '../mutation-types';
 import api from '../../api';
 import router from '../../router';
+import { normalizeDataObj, normalizeDataArr } from '../tool.js';
 
 function initMember() {
   let member = localStorage.getItem('zxkMember')
@@ -29,6 +31,9 @@ function initMember() {
       getPraiseNum: -1,
       articleNum: -1,
       anthology: [],
+      byId: {
+      },
+      all: [],
     }
   }
 }
@@ -59,7 +64,17 @@ const mutations = {
   },
   [MEMBER_LOGIN_RE]() {
     router.push('/login')
-  }
+  },
+  [MEMBER_RECEIVE](state, member) {
+    if (Array.isArray(member)) {
+      state.needFetch = false;
+      normalizeDataArr(state, member);
+      state.lastTime = +new Date();
+    } else if (typeof member === 'object') {
+      normalizeDataObj(state, member)
+    }
+    state.isFetching = false;
+  },
 };
 
 export default {

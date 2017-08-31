@@ -1,11 +1,27 @@
 <template>
   <div class="find">
     <div class="swiper">
-      我是轮播图 比例 16 ：10
+      <!-- Slider main container -->
+      <div class="swiper-container">
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+              <!-- Slides -->
+              <div class="swiper-slide">Slide 1</div>
+              <div class="swiper-slide">Slide 2</div>
+              <div class="swiper-slide">Slide 3</div>
+          </div>
+          <!-- If we need pagination -->
+          <div class="swiper-pagination"></div>
+      </div>
     </div>
     <Gap />
     <div class="hot">
-      热门文章
+      <MyTitle text="精选推荐"></MyTitle>
+      <div class="list">
+        <template v-for='item in soltByCreateTime'>
+          <PreArticle :article='content[item]'></PreArticle>
+        </template>
+      </div>
     </div>
     <Gap />
     <div class="latest">
@@ -16,20 +32,61 @@
 
 <script>
 import Gap from "../../components/Gap";
+import MyTitle from '../../components/MyTitle';
+import PreArticle from '../../components/PreArticle';
+import Swiper from 'swiper/dist/js/swiper.min.js';
+require('swiper/dist/css/swiper.min.css')
+
+import { mapState } from 'vuex';
+
+let mySwiper;
 
 export default {
   name: 'find',
   components: {
     Gap,
+    MyTitle,
+    PreArticle,
   },
   data() {
     return {
     };
   },
+  computed: {
+    ...mapState({
+      content: state => state.content.byId,
+      soltByCreateTime: state => state.content.byCreateTime,
+    })
+  },
+  created() {
+    const { dispatch } = this.$store
+    dispatch('fetchContentIfNeeded');
+  },
+  mounted() {
+    mySwiper = new Swiper('.swiper-container', {
+      pagination: '.swiper-pagination',
+      autoplay: 2500,
+    })
+  },
+  methods: {
+
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
+<style>
+  .swiper-slide {
+    height: 500px;
+  }
+  .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 10px;
+  }
+  .swiper-pagination .swiper-pagination-bullet {
+    width: 16px;
+    height: 16px;
+  }
+  .swiper-pagination .swiper-pagination-bullet-active {
+    background: var(--主题色);
+  }
 </style>
