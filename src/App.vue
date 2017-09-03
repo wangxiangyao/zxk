@@ -9,6 +9,7 @@
 
 <script>
 import FooterNav from './components/FooterNav'
+import router from './router'
 
 export default {
   name: 'app',
@@ -20,6 +21,9 @@ export default {
     const { member } = this.$store;
     console.log(member)
   },
+  mounted() {
+    router.push('/');
+  }
 };
 </script>
 

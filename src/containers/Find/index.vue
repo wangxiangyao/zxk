@@ -76,7 +76,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  .swiper-slide {
+  .swiper .swiper-slide {
     height: 500px;
   }
   .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
