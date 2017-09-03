@@ -1,1 +1,1 @@
-export const baseUrl = 'http://localhost:8080/selfStudyClass/api/v1';
+export const baseUrl = 'http://localhost:8080/api/v1';

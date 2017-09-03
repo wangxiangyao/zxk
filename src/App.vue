@@ -21,9 +21,6 @@ export default {
     const { member } = this.$store;
     console.log(member)
   },
-  mounted() {
-    router.push('/');
-  }
 };
 </script>
 
