@@ -13,7 +13,7 @@ function initMember() {
     return JSON.parse(member)
   } else {
     return {
-      id: 1,
+      id: -1,
       phone: '13213195318',
       nickname: '',
       name: '',

@@ -32,7 +32,7 @@ const router = new Router({
         store.dispatch('login', {
           phone: member.phone,
         });
-        next();
+        next('find');
       }
     },
     {
