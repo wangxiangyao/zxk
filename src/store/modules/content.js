@@ -4,6 +4,7 @@ import {
   CONTENT_REQUEST,
   CONTENT_RECEIVE,
   CONTENT_NEED_FETCH,
+  ARTICLE_REQUEST_SOMEONE,
 } from '../mutation-types';
 import api from '../../api';
 import router from '../../router';
@@ -77,13 +78,19 @@ function insertByCreateTime(state, content) {
   left = 0,
   right = byCreateTime.length - 1;
 
+  if (byCreateTime.indexOf(keyNum) > -1) {
+    return;
+  }
+
   while(left <= right) {
     let middle = Math.floor((left + right) / 2);
-    if (byId[keyNum].createTime >= byId[middle].createTime) {
+    console.log('二分查找判断时间', byId, keyNum, middle)
+    if (byId[keyNum].createTime >= byId[byCreateTime[middle]].createTime) {
       right = middle - 1;
     } else {
       left = middle + 1;
     }
+    console.log('是否出错')
   }
   byCreateTime.splice(left, 0, keyNum);
   return;
@@ -103,6 +110,11 @@ const actions = {
     commit('ARTICLE_ADD');
     let res = api.addArticle(article);
     console.log(res);
+    dispatch('contentReceive', res.data);
+  },
+  getOneArticle({ state, commit, dispatch }, id) {
+    commit('ARTICLE_REQUEST_SOMEONE');
+    let res = api.getOneArticle(id);
     dispatch('contentReceive', res.data);
   },
   fetchContentIfNeeded({ state, dispatch }) {
@@ -125,6 +137,9 @@ const actions = {
 
 const mutations = {
   [ARTICLE_ADD](state) {
+    state.isFetching = true;
+  },
+  [ARTICLE_REQUEST_SOMEONE](state) {
     state.isFetching = true;
   },
   [CONTENT_REQUEST](state) {

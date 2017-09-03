@@ -1,5 +1,1 @@
-const baseUrl = '/api/v1/';
-
-export default {
-  baseUrl,
-}
+export const baseUrl = 'http://upbght.natappfree.cc/selfStudyClass/api/v1';

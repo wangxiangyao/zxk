@@ -16,7 +16,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .type {
-    padding: 6px;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 60px;
     color: #fff;
     background-color: var(--主题色);
     font-size: 20px;

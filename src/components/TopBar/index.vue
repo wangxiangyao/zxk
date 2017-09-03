@@ -7,11 +7,11 @@
       <slot name="center"></slot>
     </div>
     <div class="right" :class="{'right-line': needRight}">
-      <div class="default-right">
-        <i class="el-icon-more" v-if="needRight"></i>
-        <i class="el-icon-arrow-right" v-else></i>
-      </div>
       <slot name="right">
+        <div class="default-right">
+          <i class="el-icon-more" v-if="needRight"></i>
+          <i class="el-icon-arrow-right" v-else></i>
+        </div>
       </slot>
     </div>
   </div>
@@ -51,6 +51,7 @@ export default {
     display: flex;
     height: 100px;
     min-height: 100px;
+    border-bottom: 2px solid #e5e5e5;
   }
   .left, .right {
     flex: 0 0 12.5%;

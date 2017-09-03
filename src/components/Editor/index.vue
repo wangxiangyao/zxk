@@ -1,6 +1,6 @@
 <template>
   <div class="editor">
-    <mavon-editor :style="editorStyle" :toolbars="toolbars" :subfield="false" @save="handleSave"></mavon-editor>
+    <mavon-editor :style="editorStyle" :toolbars="toolbars" :subfield="false" @save="handleSave" :default_open='defaultOpen' :toolbarsFlag='toolbarsFlag' :value='value'></mavon-editor>
   </div>
 </template>
 
@@ -27,6 +27,24 @@ export default {
       }
     }
   },
+  props: {
+    isRead: {
+      type: Boolean,
+      default: false,
+    },
+    value: String,
+  },
+  computed: {
+    defaultOpen() {
+      if (this.isRead) {
+        return 'preview';
+      }
+      return 'edit';
+    },
+    toolbarsFlag() {
+      return !this.isRead;
+    }
+  },
   components: {
     'mavon-editor': mavonEditor.mavonEditor
   },
@@ -42,6 +60,7 @@ export default {
 <style>
   .editor {
     flex: 1;
+    overflow: auto;
   }
   .v-note-op {
     height: 80px;
@@ -77,7 +96,11 @@ export default {
     height: 100%;
   }
   .editor .v-note-wrapper .v-note-panel .v-note-show .v-show-content, .editor .v-note-wrapper .v-note-panel .v-note-show .v-show-content-html {
+    background-color: #fff;
     padding: 16px 50px 30px 50px;
     font-size: 30px;
+  }
+  .code-github .hljs {
+    overflow: auto;
   }
 </style>

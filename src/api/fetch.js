@@ -3,21 +3,20 @@ import { baseUrl } from './config';
 export default async (url = '', data = {}, type = "GET") => {
   type = type.toUpperCase();
   url = baseUrl + url;
-
+  console.log(url, type)
   if (type === 'GET') {
     let dataStr = '';
-    object.keys(data).forEach(key => {
+    Object.keys(data).forEach(key => {
       dataStr = dataStr + key + '=' + data[key] + '&';
     })
     if (dataStr !== '') {
-      dataStr = dataStr.substr(0, dataStr.lastIndexof('&'));
+      dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
       url = url + "?" + dataStr;
     }
   }
 
   if (window.fetch) {
     let requestConfig = {
-      credentials: "include",
       method: type,
       headers: {
         'Accept': "application/json",
@@ -35,6 +34,7 @@ export default async (url = '', data = {}, type = "GET") => {
 
     try {
       const response = await fetch(url, requestConfig)
+      console.log('请求中')
       const responseJson = await response.json()
       return responseJson
     } catch (error) {

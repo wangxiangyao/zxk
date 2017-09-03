@@ -35,7 +35,7 @@
         </div>
 
     </router-link>
-    <MyMask v-show="isAdd" position="bottom" @handleClose.self="handleIsAdd">
+    <MyMask v-show="isAdd" position="bottom" @handleClose="handleIsAdd">
       <div class="addType">
         <div class="addItem addArticle" @click="addArticle">
           写文章

@@ -1,5 +1,5 @@
 <template>
-  <div class="pre-article">
+  <div class="pre-article" @click='handleClick'>
     <div class="left">
       <div class="author">
         <div class="avator">
@@ -42,6 +42,7 @@
 <script>
 import Type from '../ContentType';
 import { mapState } from 'vuex';
+import router from '../../router';
 
 export default {
   name: 'preArticle',
@@ -52,6 +53,13 @@ export default {
     return {
       type: 0,
       currentTime: +new Date(),
+    }
+  },
+  methods: {
+    handleClick() {
+      let id = this.article.id;
+      let url = `/Article/${id}`;
+      router.push(url);
     }
   },
   props: {
@@ -75,7 +83,8 @@ export default {
         let h = Math.floor(timepass / 1000 / 3600);
         timeText = `${h} 小时前`;
       } else {
-        timeText += Date.getFullYear(createTime) + '/' + Date.getMonth(createTime) + '/' + Date.getDate(createTime);
+        let time = new Date(createTime);
+        timeText += time.getFullYear() + '年' + time.getMonth() + '月' + time.getDate() + '日';
       }
       return timeText;
     },

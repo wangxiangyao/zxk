@@ -8,6 +8,7 @@ import Information from '../containers/Information';
 import Main from '../containers/Main';
 import Login from '../containers/Login';
 import AboutArticle from '../containers/AboutArticle';
+import Article from '../containers/Article';
 
 // const Home = r => require.ensure([], () => r(require('/containers/Home/Home.vue')))
 // const Find = resolve => require.ensure(['../containers/Find/index.vue'], resolve);
@@ -57,6 +58,10 @@ const router = new Router({
     {
       path: '/aboutArticle/:item/:id?',
       component: AboutArticle,
+    },
+    {
+      path: '/article/:id',
+      component: Article,
     },
   ],
 });

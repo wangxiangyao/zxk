@@ -9,6 +9,7 @@ import { normalizeDataObj, normalizeDataArr } from './tool.js';
 export const contentReceive = ({ state, commit }, content) => {
   console.log('收到了content', content)
   let author;
+  let anthology;
   if (Array.isArray(content)) {
     author = [];
     content.map((item) => {
@@ -26,6 +27,13 @@ export const contentReceive = ({ state, commit }, content) => {
       }
     }
     content.author = content.author.id;
+    if (content.anthology) {
+      anthology = {
+        ...content.anthology,
+      }
+      content.anthology = content.anthology.id;
+      commit('ANTHOLOGY_RECEIVE', anthology);
+    }
   }
   console.log('范式化第一步，分发', content, author);
   commit('CONTENT_RECEIVE', content);

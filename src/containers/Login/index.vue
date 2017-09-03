@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      phone: this.$store.phone,
+      phone: this.$store.state.member.phone,
       verificationCode: '',
       vfcText: "获取验证码",
       vfcResetTime: 60,
@@ -61,7 +61,7 @@ export default {
   computed: {
     vfcMessage() {
       return this.isVfcFetch ? `${this.vfcResetTime} s` : this.vfcText;
-    }
+    },
   },
 
   methods: {
@@ -69,7 +69,7 @@ export default {
       if (this.isVfcFetch) {
         return;
       }
-      api.memberGetVfc();
+      api.memberGetVfc(this.phone);
       this.isVfcFetch = !this.isVfcFetch;
       this.vfcInterval = setInterval(() => {
         if (this.vfcResetTime === 0) {

@@ -14,7 +14,7 @@ function initMember() {
   } else {
     return {
       id: 1,
-      phone: '',
+      phone: '13213195318',
       nickname: '',
       name: '',
       unit: '',
@@ -32,8 +32,12 @@ function initMember() {
       articleNum: -1,
       anthology: [],
       byId: {
+        '-1': {
+          id: -1,
+          name: '匿名',
+        }
       },
-      all: [],
+      all: [-1],
     }
   }
 }
