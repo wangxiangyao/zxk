@@ -162,7 +162,7 @@ export default {
     // 请求验证码
     let res = fetch('/member/verificationCode', {
       mobile: phone,
-    }, 'POST')
+    })
     return res;
   },
 
