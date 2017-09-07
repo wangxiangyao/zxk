@@ -14,4 +14,5 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
 :root {
   --主题色: rgb(155, 144, 194);
   --次要: #c5c5c5;
+  --分割线: #e5e5e5;
 }

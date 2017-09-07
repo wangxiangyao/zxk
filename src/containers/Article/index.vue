@@ -35,15 +35,23 @@
       </div>
     </div>
     <div :class="$style.action">
-      <div class="writeComment">
-
+      <div :class="$style.writeComment" @click='handleWriteComment'>
+        <i class="el-icon-edit" :class='$style.icon'></i>
+        <input type="text" name="comment" v-model='myComment.content' placeholder="写下您的评论..." :class='$style.input'>
       </div>
-      <div class="like">
-
+      <div :class="$style.right">
+        <div :class="$style.like">
+          <faicon name='heart' :class='$style.icon' scale='2.3'></faicon>
+          <faicon name='heart-o' :class='$style.icon'></faicon>
+        </div>
+        <div :class="$style.collect">
+          <faicon name='bookmark-o' :class='$style.icon'></faicon>
+          <faicon name='bookmark' :class='$style.icon'></faicon>
+        </div>
       </div>
-      <div class="collect">
-
-      </div>
+    </div>
+    <div v-if='isWriteComment'>
+      <Comment :content='myComment.content' @handleClose='handleCloseWriteComment' @edit='edit' @handlePublish='handlePublish'></Comment>
     </div>
   </div>
 </template>
@@ -52,12 +60,22 @@
 import TopBar from '../../components/TopBar';
 import { mapState } from 'vuex';
 import Editor from '../../components/Editor';
+import { Icon } from "element-ui";
+import 'vue-awesome/icons/heart';
+import 'vue-awesome/icons/heart-o';
+import 'vue-awesome/icons/bookmark';
+import 'vue-awesome/icons/bookmark-o';
+import faicon from 'vue-awesome/components/Icon';
+import Comment from './comment.vue';
 
 export default {
   name: 'article',
   components: {
     TopBar,
     Editor,
+    Icon,
+    faicon,
+    Comment,
   },
   created() {
     this.getArticle();
@@ -65,6 +83,10 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
+      myComment: {
+        content: '',
+      },
+      isWriteComment: false,
     }
   },
   computed: {
@@ -88,6 +110,18 @@ export default {
       const id = this.$route.params.id;
       const { state, dispatch } = this.$store;
       dispatch('getOneArticle', id);
+    },
+    handleWriteComment() {
+      this.isWriteComment = true;
+    },
+    handleCloseWriteComment() {
+      this.isWriteComment = false;
+    },
+    edit(newContent) {
+      this.myComment.content = newContent;
+    },
+    handlePublish() {
+      console.log('发表评论');
     }
   }
 };
@@ -167,11 +201,30 @@ export default {
   .action {
     display: flex;
     position: fixed;
+    padding: 15px 30px;
     left: 0;
     bottom: 0;
     width: 100%;
     height: 80px;
-    background-color: #ccc;
+    border-top: 2px solid var(--分割线);
     z-index: 1600;
+  }
+  .right {
+    flex: 0 0 50%;
+  }
+  .writeComment {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #eee;
+  }
+  .input {
+    margin: 0 10px;
+    font-size: 25px;
+    outline: none;
+  }
+  .icon {
+    font-size: 30px;
   }
 </style>

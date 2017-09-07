@@ -155,8 +155,7 @@ export default {
   memberLogin(user) {
     // 返回对象，表示验证未过期
     // 返回false，表示要重新登录
-    return false;
-    // return fetch('member/login/', user, 'POST');
+    return fetch('member/login/', user, 'POST');
   },
   memberGetVfc(phone) {
     // 请求验证码
