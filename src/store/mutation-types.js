@@ -16,3 +16,15 @@ export const ARTICLE_REQUEST_SOMEONE = 'ARTICLE_REQUEST_SOMEONE';
 export const CONTENT_REQUEST = 'CONTENT_REQUEST';
 export const CONTENT_RECEIVE = 'CONTENT_RECEIVE';
 export const CONTENT_NEED_FETCH = 'CONTENT_NEED_FETCH';
+
+//问答相关
+export const ISSUE_ADD = 'ISSUE_ADD';
+export const ISSUE_REQUEST_SOMEONE = 'ISSUE_REQUEST_SOMEONE';
+
+//评论相关
+export const COMMENT_ADD = 'COMMENT_ADD';
+export const COMMENT_RECEIVE = 'COMMENT_RECEIVE';
+
+//程序相关
+export const MASK_OPEN　= 'MASK_OPEN';
+export const MASK_CLOSE = 'MASK_CLOSE'

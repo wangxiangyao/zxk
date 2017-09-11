@@ -16,7 +16,7 @@
         </div>
 
     </router-link>
-    <div class="nav add" @click="handleIsAdd">
+    <div class="nav add" @click='add'>
       <i class="iconfont icon-add nav-icon" />
     </div>
     <router-link to="/information" tag="div" class="nav">
@@ -35,12 +35,12 @@
         </div>
 
     </router-link>
-    <MyMask v-show="isAdd" position="bottom" @handleClose="handleIsAdd">
+    <MyMask v-if='hasMask' position="bottom" @handleClose="handleClose">
       <div class="addType">
         <div class="addItem addArticle" @click="addArticle">
           写文章
         </div>
-        <div class="addItem addIssue">
+        <div class="addItem addIssue" @click="addIssue">
           提问题
         </div>
       </div>
@@ -57,18 +57,29 @@ export default {
   components: {
     MyMask,
   },
-  data() {
-    return {
-      isAdd: false,
-    }
+  computed: {
+    hasMask() {
+      return this.$store.state.hasMask
+    },
   },
   methods: {
-    handleIsAdd() {
-      this.isAdd = !this.isAdd;
+    handleClose() {
+      const { commit } = this.$store;
+      commit('MASK_CLOSE');
+    },
+    add() {
+      const { commit } = this.$store;
+      commit('MASK_OPEN');
     },
     addArticle() {
-      this.isAdd = !this.isAdd;
+      const { commit } = this.$store;
+      commit('MASK_CLOSE')
       router.push('/aboutArticle/add');
+    },
+    addIssue() {
+      const { commit } = this.$store;
+      commit('MASK_CLOSE')
+      router.push('/aboutIssue/add');
     }
   },
 };

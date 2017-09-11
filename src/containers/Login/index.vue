@@ -106,7 +106,8 @@ export default {
    display: flex;
    justify-content: center;
    align-items: center;
-   width: 30%;
+   flex: none;
+   padding: 0 20px;
    font-size: 36px;
  }
  .my-input {
@@ -124,10 +125,9 @@ export default {
    display: flex;
    justify-content: center;
    align-items: center;
-   width: 210px;
+   width: 250px;
    padding: 20px 0;
    font-size: 30px;
-   line-height: 60px;
  }
  .vfc-text {
    padding: 0 25px;

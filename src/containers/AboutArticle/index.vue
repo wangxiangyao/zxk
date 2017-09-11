@@ -89,6 +89,10 @@ export default {
     handleSave(value, render) {
       const { dispatch, state } = this.$store;
       console.log(state)
+      if (this.article.title.trim() === '') {
+        console.log('标题未空，无法保存，应提示失败了')
+        return;
+      }
       let theArticle = {
         authorId: state.member.id,
         anthologyId: this.anthology.id,

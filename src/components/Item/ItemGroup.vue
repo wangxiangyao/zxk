@@ -13,8 +13,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .item-group {
-    padding: 0 10px;
-    border-top: 2px solid #ccc;
-    border-bottom: 2px solid #ccc;
+    padding: 0 30px;
+    border-top: 2px solid var(--分割线);
+    border-bottom: 2px solid var(--分割线);
   }
 </style>

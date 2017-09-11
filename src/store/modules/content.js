@@ -1,6 +1,8 @@
 import {
   ARTICLE_ADD,
   ARTICLE_RECEIVE,
+  ISSUE_ADD,
+  ISSUE_REQUEST_SOMEONE,
   CONTENT_REQUEST,
   CONTENT_RECEIVE,
   CONTENT_NEED_FETCH,
@@ -114,9 +116,24 @@ const actions = {
   },
   getOneArticle({ state, commit, dispatch }, id) {
     commit('ARTICLE_REQUEST_SOMEONE');
-    let res = api.getOneArticle(id);
+    let res = api.getOneContent(id);
     dispatch('contentReceive', res.data);
   },
+
+  addIssue({ state, commit, dispatch}, issue) {
+    if (state.isFetching) {
+      return
+    }
+    commit('ISSUE_ADD');
+    let res = api.addIssue(issue);
+    dispatch('contentReceive', res.data);
+  },
+  getOneIssue({ state, commit, dispatch}, id) {
+    commit('ISSUE_REQUEST_SOMEONE');
+    let res = api.getOneContent(id);
+    dispatch('contentReceive', res.data);
+  },
+
   fetchContentIfNeeded({ state, dispatch }) {
     console.log('判断是会否需要请求');
     if (state.isFetching) {
@@ -140,6 +157,12 @@ const mutations = {
     state.isFetching = true;
   },
   [ARTICLE_REQUEST_SOMEONE](state) {
+    state.isFetching = true;
+  },
+  [ISSUE_ADD](state) {
+    state.isFetching = true;
+  },
+  [ISSUE_REQUEST_SOMEONE](state) {
     state.isFetching = true;
   },
   [CONTENT_REQUEST](state) {

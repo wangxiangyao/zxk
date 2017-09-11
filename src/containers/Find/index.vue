@@ -19,7 +19,12 @@
       <MyTitle text="精选推荐"></MyTitle>
       <div class="list">
         <template v-for='item in soltByCreateTime'>
-          <PreArticle :article='content[item]'></PreArticle>
+          <template v-if='content[item].type === 1'>
+            <PreArticle :article='content[item]'></PreArticle>
+          </template>
+          <template v-else-if='content[item].type === 2'>
+            <PreIssue :issue='content[item]'></PreIssue>
+          </template>
         </template>
       </div>
     </div>
@@ -34,6 +39,7 @@
 import Gap from "../../components/Gap";
 import MyTitle from '../../components/MyTitle';
 import PreArticle from '../../components/PreArticle';
+import PreIssue from '../../components/PreIssue';
 import Swiper from 'swiper/dist/js/swiper.min.js';
 require('swiper/dist/css/swiper.min.css')
 
@@ -47,6 +53,7 @@ export default {
     Gap,
     MyTitle,
     PreArticle,
+    PreIssue,
   },
   data() {
     return {

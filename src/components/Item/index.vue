@@ -15,7 +15,7 @@ export default {
   .item {
     height: 120px;
     width: 100%;
-    border-top: 2px solid #ccc;
+    border-top: 2px solid var(--分割线);
   }
   .item:nth-child(1) {
     border-top: none;

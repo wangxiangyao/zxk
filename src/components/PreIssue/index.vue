@@ -1,40 +1,42 @@
 <template>
-  <div class="pre-article" @click='handleClick'>
+  <div class="pre-issue" @click='handleClick'>
     <div class="left">
       <div class="author">
         <div class="avator">
 
         </div>
         <div class="name">
-          {{members[article.author].name}}
+          {{members[issue.author].name}}
         </div>
         <div class="publish-time">
           {{this.createTime}}
         </div>
       </div>
       <div class="title">
-        <Type :type='type' :styleType='1'></Type>
+        <Type :type='type' :styleType='2'></Type>
         <div class="title-text">
-          {{article.title}}
+          {{issue.title}}
+        </div>
+      </div>
+      <div class="content-wrapper">
+        <div class="issueContent">
+          {{issue.content}}
         </div>
       </div>
       <div class="other">
         <div class="kind">
           所属类别
         </div>
-        <div class="read">
-          阅读 {{article.readNum}}
+        <div class="attention">
+          关注 {{issue.attentionNum}}
         </div>
-        <div class="like">
-          喜欢 {{article.praiseNum}}
+        <div class="answer">
+          回答 {{issue.answerNum}}
         </div>
-        <div class="comment">
-          收藏 {{article.collectNum}}
+        <div class="praise">
+          赞同 {{issue.praiseNum}}
         </div>
       </div>
-    </div>
-    <div class="right">
-      缩略图
     </div>
   </div>
 </template>
@@ -45,32 +47,33 @@ import { mapState } from 'vuex';
 import router from '../../router';
 
 export default {
-  name: 'preArticle',
+  name: 'preIssue',
   components: {
     Type,
   },
   data() {
     return {
-      type: 1,
+      type: 2,
       currentTime: +new Date(),
     }
   },
   methods: {
     handleClick() {
-      let id = this.article.id;
-      let url = `/Article/${id}`;
+      let id = this.issue.id;
+      console.log(id);
+      let url = `/Issue/${id}`;
       router.push(url);
     }
   },
   props: {
-    article: Object,
+    issue: Object,
   },
   computed: {
     ...mapState({
       members: state => state.member.byId,
     }),
     createTime: function() {
-      let createTime = this.article.createTime;
+      let createTime = this.issue.createTime;
       let timepass = this.currentTime - createTime;
       let timeText = '';
       if (timepass < 60000) {
@@ -94,7 +97,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .pre-article {
+  .pre-issue {
     display: flex;
     padding: 20px;
     font-size: 28px;
@@ -128,6 +131,7 @@ export default {
     display: flex;
     align-items: center;
     margin: 20px 0;
+
   }
   .title-text {
     display: -webkit-box;
@@ -137,14 +141,26 @@ export default {
     padding: 0 20px;
     font-size: 48px;
   }
-
+  .content-wrapper {
+    height: 80px;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .issueContent {
+    line-height: 40px;
+    font-size: 28px;
+  }
+  .kind{
+    font-size: 28px;
+  }
 
   .other {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
   }
-  .read, .like, .comment {
+  .attention, .answer, .praise {
     font-size: 24px;
     color: var(--次要);
     padding: 0 10px;

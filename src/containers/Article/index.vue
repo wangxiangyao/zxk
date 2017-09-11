@@ -82,8 +82,10 @@ export default {
   },
   data() {
     return {
-      id: this.$route.params.id,
+      id: Number(this.$route.params.id),
       myComment: {
+        authorId: this.$store.state.member.id,
+        target: Number(this.$route.params.id),
         content: '',
       },
       isWriteComment: false,
@@ -122,6 +124,8 @@ export default {
     },
     handlePublish() {
       console.log('发表评论');
+      const { dispatch } = this.$store;
+      dispatch('addComment', this.myComment);
     }
   }
 };

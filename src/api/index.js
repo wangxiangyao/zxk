@@ -1,7 +1,8 @@
 import fetch from './fetch';
 
 let anthologyId = 3;
-let articleId = 8;
+let contentId = 10;
+let commentId = 0;
 let createTime = +new Date();
 let contentData = [
   {
@@ -10,12 +11,12 @@ let contentData = [
       id: 1,
       name: 'wxy',
     },
-    type: 0,
     anthology: {
       id: 2,
       author: 1,
       title: '前端咨询'
     },
+    type: 1,
     createTime: createTime++,
     updateTime: +new Date(),
     title: "前端第一课",
@@ -30,7 +31,7 @@ let contentData = [
       id: 1,
       name: 'wxy',
     },
-    type: 0,
+    type: 1,
     anthology: {
       id: 2,
       author: 1,
@@ -50,7 +51,7 @@ let contentData = [
       id: 1,
       name: 'wxy',
     },
-    type: 0,
+    type: 1,
     anthology: {
       id: 2,
       author: 1,
@@ -70,7 +71,7 @@ let contentData = [
       id: 1,
       name: 'wxy',
     },
-    type: 0,
+    type: 1,
     anthology: {
       id: 2,
       author: 1,
@@ -90,7 +91,7 @@ let contentData = [
       id: 1,
       name: 'wxy',
     },
-    type: 0,
+    type: 1,
     anthology: {
       id: 2,
       author: 1,
@@ -110,7 +111,7 @@ let contentData = [
       id: 1,
       name: 'wxy',
     },
-    type: 0,
+    type: 1,
     anthology: {
       id: 2,
       author: 1,
@@ -130,7 +131,7 @@ let contentData = [
       id: 1,
       name: 'wxy',
     },
-    type: 0,
+    type: 1,
     anthology: {
       id: 2,
       author: 1,
@@ -143,6 +144,20 @@ let contentData = [
     collectNum: 12,
     praiseNum: 44,
     readNum: 66,
+  },
+  {
+    id: 8,
+    author: {
+      id: 1,
+      name: 'wxy',
+    },
+    type: 2,
+    createTime: +new Date(),
+    title: '为什么大家都不喜欢赏金猎人，为什么大家都不喜欢赏金猎人，为什么大家都不喜欢赏金猎人，为什么大家都不喜欢赏金猎人？',
+    content: '赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？',
+    attentionNum: 0,
+    praiseNum: 0,
+    answerNum: 0,
   },
 ]
 
@@ -161,7 +176,7 @@ export default {
     // 请求验证码
     let res = fetch('/member/verificationCode', {
       mobile: phone,
-    })
+    }, 'POST');
     return res;
   },
 
@@ -195,14 +210,15 @@ export default {
   },
 
   addArticle(article) {
-    articleId++
+    contentId++
     return {
       data: {
-        id: articleId,
+        id: contentId,
         author: {
           id: article.authorId,
           name: 'wxy',
         },
+        type: 1,
         anthology: {
           id: article.anthologyId,
         },
@@ -216,6 +232,26 @@ export default {
     }
   },
 
+  addIssue(issue) {
+    contentId++
+    return {
+      data: {
+        id: contentId,
+        author: {
+          id: issue.authorId,
+          name: 'wxy',
+        },
+        type: 2,
+        createTime: +new Date(),
+        title: issue.title,
+        content: issue.content,
+        attentionNum: 0,
+        praiseNum: 0,
+        answerNum: 0,
+      }
+    }
+  },
+
   fetchContent() {
     let data = deepCopy(contentData);
     console.log(data)
@@ -223,7 +259,7 @@ export default {
       data,
     };
   },
-  getOneArticle(id) {
+  getOneContent(id) {
     console.log(id, contentData)
     let item;
     for (let i = 0, len = contentData.length; i < len; i++) {
@@ -231,8 +267,28 @@ export default {
         item = deepCopy(contentData[i]);
       }
     }
+    item.comment = [];
     return {
       data: item,
+    }
+  },
+
+  // comment相关
+  addComment(comment) {
+    commentId++;
+    return {
+      data: {
+        id: commentId,
+        target: comment.target,
+        author: {
+          id: comment.authorId,
+        },
+        type: 1,
+        createTime: +new Date(),
+        content: comment.content,
+        discuss:[],
+        pariseNum: 0,
+      }
     }
   }
 };
