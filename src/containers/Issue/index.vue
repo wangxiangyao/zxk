@@ -79,11 +79,11 @@
       <div :class="$style.answerNum">
         {{issue.answerNum}} 个回答
       </div>
-      <div class="soltBy">
+      <div :class="$style.soltBy">
         排序规则
       </div>
     </div>
-    <div class="answerList">
+    <div :class="$style.answerList">
       评论列表
     </div>
   </div>
@@ -264,7 +264,13 @@ export default {
     background-color: var(--背景);
   }
   .answerNum {
-    font-size: var(--字体大小-标准);
+    font-size: 36px;
     color: var(--次要);
+  }
+  .soltBy {
+    font-size: 36px;
+  }
+  .answerList {
+    font-size: 36px;
   }
 </style>

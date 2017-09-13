@@ -7,6 +7,7 @@ import member from './modules/member';
 import anthology from './modules/anthology.js';
 import content from './modules/content.js';
 import comment from './modules/comment.js';
+import discuss from './modules/discuss.js';
 
 
 Vue.use(Vuex);
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     anthology,
     content,
     comment,
+    discuss,
   },
   stric: debug,
 });

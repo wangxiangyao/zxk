@@ -18,9 +18,6 @@ export default {
         preview: true,
         bold: true,
         italic: true,
-        alignleft: true,
-        aligncenter: true,
-        alignright: true,
       },
       editorStyle: {
         height: "100%",

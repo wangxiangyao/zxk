@@ -30,8 +30,8 @@
       <div :class="$style.mainBody">
         <Editor :isRead='true' :value='article.content'></Editor>
       </div>
-      <div class="comment">
-
+      <div class="comments">
+        显示评论
       </div>
     </div>
     <div :class="$style.action">
@@ -41,12 +41,12 @@
       </div>
       <div :class="$style.right">
         <div :class="$style.like">
-          <faicon name='heart' :class='$style.icon' scale='2.3'></faicon>
-          <faicon name='heart-o' :class='$style.icon'></faicon>
+          <faicon name='heart' scale='2'></faicon>
+          <faicon name='heart-o'></faicon>
         </div>
         <div :class="$style.collect">
-          <faicon name='bookmark-o' :class='$style.icon'></faicon>
-          <faicon name='bookmark' :class='$style.icon'></faicon>
+          <faicon name='bookmark-o' ></faicon>
+          <faicon name='bookmark'></faicon>
         </div>
       </div>
     </div>
@@ -154,6 +154,7 @@ export default {
     font-size: 32px;
   }
   .publishTime {
+    font-size: 24px;
     margin-top: 6px;
     color: var(--次要);
   }
@@ -214,7 +215,11 @@ export default {
     z-index: 1600;
   }
   .right {
+    display: flex;
     flex: 0 0 50%;
+  }
+  .like, .collect {
+    display: flex;
   }
   .writeComment {
     display: flex;

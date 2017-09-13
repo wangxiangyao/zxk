@@ -311,10 +311,12 @@
     align-items: center;
   }
   .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: var(--主题色);
     opacity: 0.5;
     width: 50px;
-    text-align: center;
   }
   .itemText {
     flex: 1;

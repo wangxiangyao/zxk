@@ -37,7 +37,7 @@ export default {
     return {
       theContent: this.content,
       btnStyle: {
-        fontSize: '22px',
+        fontSize: '24px',
       }
     }
   },
@@ -68,7 +68,7 @@ export default {
   }
 
   .edit {
-    flex: 1;
+    height: 70%;
     padding: 30px 30px 0;
   }
   .input {
@@ -82,15 +82,14 @@ export default {
 
   .action {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    flex: none;
     padding: 0 30px;
-    min-height: 150px;
-  }
-  .publish {
-
+    height: 30%;
   }
   .publishBtn {
+    flex: none;
     width: 140px;
     height: 80px;
   }

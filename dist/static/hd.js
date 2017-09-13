@@ -5,7 +5,7 @@
  * @param {Number} [fontscale = 1] - 有的业务希望能放大一定比例的字体;
  */
 const win = window;
-export default win.flex = (baseFontSize, fontscale) => {
+win.flex = (baseFontSize, fontscale) => {
   const _baseFontSize = baseFontSize || 100;
   const _fontscale = fontscale || 1;
 
@@ -28,7 +28,7 @@ export default win.flex = (baseFontSize, fontscale) => {
     metaEl.setAttribute('name', 'viewport');
     doc.head.appendChild(metaEl);
   }
-  metaEl.setAttribute('content', `width=device-width,user-scalable=no,initial-scale=${scale},maximum-scale=${scale},minimum-scale=${scale}`);
+  metaEl.setAttribute('content', `width=device-width,user-scalable=no,initial-scale=1,maximum-scale=${scale},minimum-scale=${scale}`);
   doc.documentElement.style.fontSize = `${_baseFontSize / 2 * dpr * _fontscale}px`;
 };
 win.flex(100, 1);

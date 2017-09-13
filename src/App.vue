@@ -28,6 +28,7 @@ export default {
 @import "./commenStyle/index.css";
 
 body {
+  width: 100%;
   margin: 0;
 }
 #app {

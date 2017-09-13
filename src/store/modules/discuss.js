@@ -1,15 +1,15 @@
 import {
-  COMMENT_ADD,
-  COMMENT_RECEIVE,
+  DISCUSS_ADD,
+  DISCUSS_RECEIVE,
 } from '../mutation-types';
 import api from '../../api';
 import router from '../../router';
 import { normalizeDataObj, normalizeDataArr } from '../tool.js';
 
-function initComment() {
-  let comment = localStorage.getItem('zxkComment')
-  if (comment) {
-    return JSON.parse(comment)
+function initDiscuss() {
+  let discuss = localStorage.getItem('zxkDiscuss')
+  if (discuss) {
+    return JSON.parse(discuss)
   } else {
     return {
       isFetching: false,
@@ -20,36 +20,36 @@ function initComment() {
   }
 }
 
-const state = initComment();
+const state = initDiscuss();
 
 const getters = {
 
 };
 
 const actions = {
-  addComment({ state, commit, dispatch }, comment) {
+  addDiscuss({ state, commit, dispatch }, discuss) {
     if (state.isFetching) {
       return
     }
-    commit('COMMENT_ADD');
-    let res = api.addComment(comment);
+    commit('DISCUSS_ADD');
+    let res = api.addDiscuss(discuss);
     console.log(res)
-    dispatch('commentReceive', res.data);
+    commit('DISCUSS_RECEIVE', res.data);
   }
 };
 
 const mutations = {
-  [COMMENT_ADD](state) {
+  [DISCUSS_ADD](state) {
     state.isFetching = true;
   },
-  [COMMENT_RECEIVE](state, comment) {
+  [DISCUSS_RECEIVE](state, discuss) {
     console.log('范式化第二步，保存')
-    if (Array.isArray(comment)) {
+    if (Array.isArray(discuss)) {
       state.needFetch = false;
-      normalizeDataArr(state, comment);
+      normalizeDataArr(state, discuss);
       state.lastTime = +new Date();
-    } else if (typeof comment === 'object') {
-      normalizeDataObj(state, comment)
+    } else if (typeof discuss === 'object') {
+      normalizeDataObj(state, discuss)
     }
     state.isFetching = false;
   }

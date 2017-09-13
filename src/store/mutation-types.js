@@ -25,6 +25,10 @@ export const ISSUE_REQUEST_SOMEONE = 'ISSUE_REQUEST_SOMEONE';
 export const COMMENT_ADD = 'COMMENT_ADD';
 export const COMMENT_RECEIVE = 'COMMENT_RECEIVE';
 
+//讨论相关
+export const DISCUSS_ADD = 'DISCUSS_ADD';
+export const DISCUSS_RECEIVE = 'DISCUSS_RECEIVE';
+
 //程序相关
 export const MASK_OPEN　= 'MASK_OPEN';
 export const MASK_CLOSE = 'MASK_CLOSE'

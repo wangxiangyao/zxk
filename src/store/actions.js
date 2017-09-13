@@ -2,6 +2,7 @@ import {
   ANTHOLOGY_RECEIVE,
   CONTENT_RECEIVE,
   MEMBER_RECEIVE,
+  DISCUSS_RECEIVE,
 } from './mutation-types.js';
 
 import { normalizeDataObj, normalizeDataArr } from './tool.js';
@@ -39,9 +40,15 @@ export const contentReceive = ({ state, commit, dispatch }, content) => {
       content.anthology = content.anthology.id;
       commit('ANTHOLOGY_RECEIVE', anthology);
     }
-    comment = content.comment;
-    delete content.comment;
-    dispatch('commentReceive', comment);
+    // 分开comment
+    if (content.comment) {
+      comment = content.comment;
+      content.comment = [];
+      comment.map(item => {
+        content.comment.push(item.id);
+      })
+      dispatch('commentReceive', comment);
+    }
   }
   console.log('范式化第一步，分发', content, author, comment);
   commit('CONTENT_RECEIVE', content);
@@ -51,6 +58,7 @@ export const contentReceive = ({ state, commit, dispatch }, content) => {
 export const commentReceive = ({ state, commit }, comment) => {
   console.log('接收到了comment', comment);
   let author;
+  let discuss;
   // 以后要添加discuss的范式化
   if (Array.isArray(comment)) {
     if (comment.length === 0) {
@@ -66,12 +74,22 @@ export const commentReceive = ({ state, commit }, comment) => {
   } else if (typeof comment === 'object') {
     console.log('接收到的是对象comment')
     author = {};
+    discuss = [];
     if (comment.author.id !== -1) {
       author = {
         ...comment.author,
       }
     }
     comment.author = comment.author.id;
+    // 分开discuss
+    if (comment.discuss) {
+      discuss = comment.discuss;
+      comment.discuss = [];
+      discuss.map(item => {
+        comment.discuss.push(item.id);
+      })
+      commit('DISCUSS_RECEIVE', discuss);
+    }    
   }
   commit('MEMBER_RECEIVE', author);
   commit('COMMENT_RECEIVE', comment);

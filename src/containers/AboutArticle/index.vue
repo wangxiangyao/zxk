@@ -9,7 +9,7 @@
       </div>
     </TopBar>
     <div :class="$style.title">
-      <input type="text" name="title" v-model="article.title" :class="$style.myTitle" placeholder="请输入标题...">
+      <textarea type="text" name="title" v-model="article.title" rows="2" :class="$style.myTitle" placeholder="请输入标题..." />
     </div>
     <editor @save="handleSave"/>
     <MyMask v-if='isAdd && showMask' position="top">
@@ -143,9 +143,11 @@ export default {
   .myTitle {
     padding: 30px;
     width: 100%;
-    height: 120px;
+    height: 162px;
     font-size: 48px;
     outline: none;
+    word-wrap:break-word;
+    word-break:break-all;
   }
   .pickTarget {
     background-color: #fff;

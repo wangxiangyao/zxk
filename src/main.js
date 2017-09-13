@@ -9,6 +9,7 @@ import "./iconfont/iconfont.css"
 import "./commenStyle/index.css"
 
 Vue.config.productionTip = false;
+console.log(window.devicePixelRatio);
 
 /* eslint-disable no-new */
 new Vue({

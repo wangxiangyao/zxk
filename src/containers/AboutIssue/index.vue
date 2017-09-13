@@ -11,7 +11,7 @@
       </div>
     </TopBar>
     <div :class="$style.title">
-      <textarea type="text" name="title" v-model="issue.title" :class="$style.myTitle" placeholder="请输入标题..." />
+      <textarea type="text" name="title" v-model="issue.title" :class="$style.myTitle" placeholder="请输入问题..." />
     </div>
     <editor @change="handleChange" placeholder='对问题的补充...'/>
   </div>
