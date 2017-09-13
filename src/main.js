@@ -4,11 +4,14 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import store from './store';
+import hd from './hd.js'
 
 import "./iconfont/iconfont.css"
 import "./commenStyle/index.css"
 
 Vue.config.productionTip = false;
+hd(100, 1);
+console.log(window.devicePixelRatio);
 
 /* eslint-disable no-new */
 new Vue({

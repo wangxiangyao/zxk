@@ -30,7 +30,15 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: vueLoaderConfig
+        options: {
+          vueLoaderConfig,
+          postcss: [
+            require('postcss-pxtorem')({
+              rootValue: 100,
+              propWhiteList: [],
+            })
+          ]
+        }
       },
       {
         test: /\.js$/,
