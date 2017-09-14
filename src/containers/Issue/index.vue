@@ -48,7 +48,7 @@
       <div :class="$style.info">
         <div :class="$style.left">
           <div :class="$style.attentionNum">
-            <faicon name='eye' scale='1' />
+            <faicon name='eye' scale='2' />
             <div :class="$style.theNum">
               {{issue.attentionNum}}
             </div>
@@ -62,13 +62,13 @@
       </div>
       <div :class="$style.action">
         <div :class="$style.invite">
-          <faicon name='user-plus' scale='2' />
+          <faicon name='user-plus' scale='3' />
           <div :class="$style.text">
             邀请回答
           </div>
         </div>
         <div :class="$style.writeAnswer">
-          <faicon name='paint-brush' scale='2' />
+          <faicon name='paint-brush' scale='3' />
           <div :class="$style.text">
             写回答
           </div>
@@ -145,7 +145,7 @@ export default {
       let obj = {}
       if (this.isOpen) {
         obj.height = 'auto';
-        obj.padding = '0 0 88px 0';
+        obj.paddingBottom = '88px';
       } else {
         obj.height = '220px';
       }
@@ -186,17 +186,18 @@ export default {
   }
   .issueContent {
     position: relative;
+    padding: 0 30px;
     overflow: hidden;
   }
   .openAndClose {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     position: absolute;
     z-index: 1600;
     left: 0;
     bottom: 0;
     width: 100%;
-    padding: 10px 50px;
+    padding: 10px 30px;
     background-color: rgba(255, 255, 255, .9);
     background: linear-gradient(to top, #fff, transparent);
   }
@@ -204,6 +205,7 @@ export default {
     padding: 10px;
     font-size: 36px;
     color: var(--紫苑);
+    background-color: rgba(255,255,255,.4);
   }
   .info {
     display: flex;
