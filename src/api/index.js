@@ -354,7 +354,7 @@ export default {
         author: {
           id: comment.authorId,
         },
-        type: 1,
+        type: comment.type,
         createTime: +new Date(),
         content: comment.content,
         discuss:[],

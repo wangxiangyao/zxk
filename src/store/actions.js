@@ -76,6 +76,9 @@ export const commentReceive = ({ state, commit, dispatch }, comment) => {
     console.log('接收到的是对象comment')
     author = {};
     discuss = [];
+    if (comment.target) {
+      state.content.byId[comment.target].comment.unshift(comment.id);
+    }
     if (comment.author.id !== -1) {
       author = {
         ...comment.author,

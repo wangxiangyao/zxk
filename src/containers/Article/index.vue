@@ -99,6 +99,7 @@ export default {
         authorId: this.$store.state.member.id,
         target: Number(this.$route.params.id),
         content: '',
+        type: 1,
       },
       isWriteComment: false,
     }
@@ -232,7 +233,7 @@ export default {
     bottom: 0;
     width: 100%;
     height: 80px;
-    border-top: 2px solid var(--分割线);
+    box-shadow: 0 2px 15px 1px #aaa;
     z-index: 1600;
     background-color: #fff;
   }
