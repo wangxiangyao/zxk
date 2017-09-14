@@ -30,8 +30,18 @@
       <div :class="$style.mainBody">
         <Editor :isRead='true' :value='article.content'></Editor>
       </div>
-      <div class="comments">
-        显示评论
+    </div>
+    <div :class="$style.comments">
+      <div :class="$style.commentsTop">
+        <div :class="$style.commentsNum">
+          评论：{{article.comment.length}}
+        </div>
+        <div :class="$style.soltBy">
+          排序规则
+        </div>
+      </div>
+      <div :class="$style.commentsList">
+        <PreComment :comment='comment' v-for='comment in comments' :key='comment.id'/>
       </div>
     </div>
     <div :class="$style.action">
@@ -67,6 +77,7 @@ import 'vue-awesome/icons/bookmark';
 import 'vue-awesome/icons/bookmark-o';
 import faicon from 'vue-awesome/components/Icon';
 import Comment from './comment.vue';
+import PreComment from '../../components/PreComment';
 
 export default {
   name: 'article',
@@ -76,6 +87,7 @@ export default {
     Icon,
     faicon,
     Comment,
+    PreComment,
   },
   created() {
     this.getArticle();
@@ -100,6 +112,14 @@ export default {
     },
     anthology() {
       return this.$store.state.anthology.byId[this.article.anthology];
+    },
+    comments() {
+      const allComments = this.$store.state.comment.byId;
+      let arr = [];
+      this.article.comment.map(commentId => {
+        arr.push(allComments[commentId]);
+      })
+      return arr;
     },
     createTime() {
       let time = new Date(this.article.createTime);
@@ -136,6 +156,7 @@ export default {
   .article {
     composes: fullScreen from "../../commenStyle/layout.css";
     background-color: #fff;
+    padding-bottom: 80px;
   }
   .author {
     display: flex;
@@ -213,6 +234,7 @@ export default {
     height: 80px;
     border-top: 2px solid var(--分割线);
     z-index: 1600;
+    background-color: #fff;
   }
   .right {
     display: flex;
@@ -235,5 +257,24 @@ export default {
   }
   .icon {
     font-size: 30px;
+  }
+
+  .comments {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0;
+  }
+  .commentsTop {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: var(--背景);
+  }
+  .commentsNum {
+    font-size: 24px;
+    color: var(--次要);
+  }
+  .soltBy {
+    font-size: 24px;
   }
 </style>

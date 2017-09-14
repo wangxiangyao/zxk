@@ -48,7 +48,7 @@
       <div :class="$style.info">
         <div :class="$style.left">
           <div :class="$style.attentionNum">
-            <faicon name='eye' scale='2' />
+            <faicon name='eye' scale='1' />
             <div :class="$style.theNum">
               {{issue.attentionNum}}
             </div>
@@ -62,13 +62,13 @@
       </div>
       <div :class="$style.action">
         <div :class="$style.invite">
-          <faicon name='user-plus' scale='3' />
+          <faicon name='user-plus' scale='2' />
           <div :class="$style.text">
             邀请回答
           </div>
         </div>
         <div :class="$style.writeAnswer">
-          <faicon name='paint-brush' scale='3' />
+          <faicon name='paint-brush' scale='2' />
           <div :class="$style.text">
             写回答
           </div>
@@ -182,7 +182,7 @@ export default {
   }
   .title {
     padding: 10px 30px 30px;
-    font-size: var(--字体大小-标准);
+    font-size: 36px;
   }
   .issueContent {
     position: relative;
@@ -198,10 +198,11 @@ export default {
     width: 100%;
     padding: 10px 50px;
     background-color: rgba(255, 255, 255, .9);
+    background: linear-gradient(to top, #fff, transparent);
   }
   .theOCbtn {
     padding: 10px;
-    font-size: var(--字体大小-标准);
+    font-size: 36px;
     color: var(--紫苑);
   }
   .info {
@@ -220,7 +221,7 @@ export default {
     color: var(--紫苑);
   }
   .theNum {
-    font-size: var(--字体大小-较小);
+    font-size: 24px;
     color: var(--紫苑);
     margin: 0 20px;
   }
@@ -260,15 +261,15 @@ export default {
   .answerInfo {
     display: flex;
     justify-content: space-between;
-    padding: 30px;
+    padding: 15px 30px;
     background-color: var(--背景);
   }
   .answerNum {
-    font-size: 36px;
+    font-size: 24px;
     color: var(--次要);
   }
   .soltBy {
-    font-size: 36px;
+    font-size: 24px;
   }
   .answerList {
     font-size: 36px;

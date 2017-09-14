@@ -66,6 +66,9 @@ export default {
   .v-note-op {
     height: 80px;
   }
+  .editor .v-note-wrapper .v-note-panel {
+    box-shadow: none;
+  }
   .editor .v-note-wrapper .v-note-op .left {
     padding-left: 12px;
   }
@@ -98,7 +101,7 @@ export default {
   }
   .editor .v-note-wrapper .v-note-panel .v-note-show .v-show-content, .editor .v-note-wrapper .v-note-panel .v-note-show .v-show-content-html {
     background-color: #fff;
-    padding: 16px 50px 30px 50px;
+    padding: 30px 0;
     font-size: 30px;
   }
   .editor .v-note-wrapper .v-note-panel .v-note-show .v-show-content, p {

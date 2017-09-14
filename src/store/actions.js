@@ -42,7 +42,8 @@ export const contentReceive = ({ state, commit, dispatch }, content) => {
     }
     // 分开comment
     if (content.comment) {
-      comment = content.comment;
+      comment = [...content.comment];
+      console.log(comment, content.comment)
       content.comment = [];
       comment.map(item => {
         content.comment.push(item.id);
@@ -55,7 +56,7 @@ export const contentReceive = ({ state, commit, dispatch }, content) => {
   commit('MEMBER_RECEIVE', author);
 }
 
-export const commentReceive = ({ state, commit }, comment) => {
+export const commentReceive = ({ state, commit, dispatch }, comment) => {
   console.log('接收到了comment', comment);
   let author;
   let discuss;
@@ -88,9 +89,28 @@ export const commentReceive = ({ state, commit }, comment) => {
       discuss.map(item => {
         comment.discuss.push(item.id);
       })
-      commit('DISCUSS_RECEIVE', discuss);
-    }    
+      dispatch('discussReceive', discuss);
+    }
   }
   commit('MEMBER_RECEIVE', author);
   commit('COMMENT_RECEIVE', comment);
+}
+
+export const discussReceive = ({ state, commit }, discuss) => {
+  console.log('接收到了discuss', discuss);
+  let author;
+  if (Array.isArray(discuss)) {
+    if (discuss.length === 0) {
+      return;
+    }
+    author = [];
+    discuss.map((item) => {
+      if (item.author.id !== -1) {
+        author.push(item.author)
+      }
+      item.author = item.author.id;
+    })
+  }
+  commit('MEMBER_RECEIVE', author);
+  commit('DISCUSS_RECEIVE', discuss);
 }

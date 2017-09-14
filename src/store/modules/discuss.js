@@ -34,8 +34,8 @@ const actions = {
     commit('DISCUSS_ADD');
     let res = api.addDiscuss(discuss);
     console.log(res)
-    commit('DISCUSS_RECEIVE', res.data);
-  }
+    dispatch('discussReceive', res.data);
+  },
 };
 
 const mutations = {

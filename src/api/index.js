@@ -2,7 +2,7 @@ import fetch from './fetch';
 
 let anthologyId = 3;
 let contentId = 10;
-let commentId = 0;
+let commentId = 100;
 let createTime = +new Date();
 let contentData = [
   {
@@ -19,7 +19,7 @@ let contentData = [
     type: 1,
     createTime: createTime++,
     updateTime: +new Date(),
-    title: "前端第一课",
+    title: "用来测试的文章",
     content: "今天，我们来学习css的知识...",
     collectNum: 100,
     praiseNum: 455,
@@ -160,6 +160,76 @@ let contentData = [
     answerNum: 0,
   },
 ]
+let commentData = [
+  {
+    id: 1,
+    author: {
+      id: 1,
+      name: 'wxy'
+    },
+    type: 1,
+    createTime: createTime++,
+    content: '你说的真好',
+    praiseNum: 100,
+    discussNum: 2,
+    discuss: [
+      {
+        id: 11,
+        author: {
+          id: 1,
+          name: 'wxy',
+        },
+        type: 3,
+        createTime: createTime++,
+        content: '我真的不能再赞同你了',
+      },
+      {
+        id: 12,
+        author: {
+          id: 1,
+          name: 'wxy',
+        },
+        type: 3,
+        createTime: createTime++,
+        content: '我是第二个！',
+      },
+    ],
+  },
+  {
+    id: 2,
+    author: {
+      id: 1,
+      name: 'wxy'
+    },
+    type: 1,
+    createTime: createTime++,
+    content: '你说的真好*2',
+    praiseNum: 100,
+    discussNum: 2,
+    discuss: [
+      {
+        id: 13,
+        author: {
+          id: 1,
+          name: 'wxy',
+        },
+        type: 3,
+        createTime: createTime++,
+        content: '我是第三个',
+      },
+      {
+        id: 14,
+        author: {
+          id: 1,
+          name: 'wxy',
+        },
+        type: 3,
+        createTime: createTime++,
+        content: '我也来了！',
+      },
+    ],
+  },
+];
 
 function deepCopy(a) {
   let obj = JSON.parse(JSON.stringify(a));
@@ -267,11 +337,12 @@ export default {
         item = deepCopy(contentData[i]);
       }
     }
-    item.comment = [];
+    item.comment = deepCopy(commentData);
     return {
       data: item,
     }
   },
+
 
   // comment相关
   addComment(comment) {
@@ -290,5 +361,17 @@ export default {
         pariseNum: 0,
       }
     }
-  }
+  },
+
+  getOneComment(id) {
+    let item;
+    for (let i = 0, len = commentData.length; i < len; i++) {
+      if (commentData[i].id == id) {
+        item = deepCopy(commentData[i]);
+      }
+    }
+    return {
+      data: item,
+    }
+  },
 };

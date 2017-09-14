@@ -1,6 +1,7 @@
 import {
   COMMENT_ADD,
   COMMENT_RECEIVE,
+  COMMENT_REQUEST_SOMEONE,
 } from '../mutation-types';
 import api from '../../api';
 import router from '../../router';
@@ -35,7 +36,12 @@ const actions = {
     let res = api.addComment(comment);
     console.log(res)
     dispatch('commentReceive', res.data);
-  }
+  },
+  getOneComment({ state, commit, dispatch}, id) {
+    commit('COMMENT_REQUEST_SOMEONE');
+    let res = api.getOneComment(id);
+    dispatch('commentReceive', res.data);
+  },
 };
 
 const mutations = {
@@ -52,6 +58,9 @@ const mutations = {
       normalizeDataObj(state, comment)
     }
     state.isFetching = false;
+  },
+  [COMMENT_REQUEST_SOMEONE](state) {
+    state.isFetching = true;
   }
 };
 

@@ -53,7 +53,7 @@ export default {
       isVfcFetch: false,
       vfcInterval: '',
       btnStyle: {
-        fontSize: '40px',
+        fontSize: '36px',
       }
     }
   },
@@ -118,6 +118,11 @@ export default {
  .my-input:focus {
    outline: none;
  }
+ @media(max-width: 320px) {
+   #verificationCode {
+     max-width: 258px;
+   }
+ }
  #userphone {
    margin-right: -8px;
  }
@@ -125,7 +130,7 @@ export default {
    display: flex;
    justify-content: center;
    align-items: center;
-   width: 250px;
+   flex: none;
    padding: 20px 0;
    font-size: 30px;
  }
