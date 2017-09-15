@@ -1,6 +1,6 @@
 <template>
   <div class="editor">
-    <mavon-editor :style="editorStyle" :toolbars="toolbars" :subfield="false" @save="handleSave" :default_open='defaultOpen' :toolbarsFlag='toolbarsFlag' :value='value' :placeholder='placeholder' @change='handleChange'></mavon-editor>
+    <mavon-editor :style="editorStyle" :toolbars="toolbars" :subfield="false" @save="handleSave" :default_open='defaultOpen' :toolbarsFlag='toolbarsFlag' :value='value' :placeholder='placeholder' @change='handleChange' ></mavon-editor>
   </div>
 </template>
 
@@ -21,6 +21,8 @@ export default {
       },
       editorStyle: {
         height: "100%",
+        minHeight: 'auto',
+        overflow: 'hiddne',
       }
     }
   },

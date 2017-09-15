@@ -76,6 +76,7 @@ export default {
   methods: {
     handleClickIssueComment() {
       console.log('请求此回答详细信息', this.comment.id);
+      this.$router.push(`/issue/${this.issueId}/answer/${this.comment.id}`);
     },
     handleToggleArticleCommentDiscuss() {
       const { dispatch } = this.$store;
@@ -87,6 +88,7 @@ export default {
   },
   props: {
     comment: Object,
+    issueId: Number,
   },
   computed: {
     discuss() {
@@ -184,7 +186,7 @@ export default {
   font-size: 30px;
 }
 .issueComment {
-  height: 230px;
+  max-height: 230px;
   overflow: hidden;
 }
 

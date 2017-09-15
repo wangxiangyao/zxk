@@ -32,7 +32,7 @@ const actions = {
       return
     }
     commit('DISCUSS_ADD');
-    let res = api.addDiscuss(discuss);
+    let res = api.addComment(discuss);
     console.log(res)
     dispatch('discussReceive', res.data);
   },

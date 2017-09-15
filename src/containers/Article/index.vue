@@ -273,7 +273,7 @@ export default {
   }
   .commentsNum {
     font-size: 24px;
-    color: var(--次要);
+    color: var(--主题色);
   }
   .soltBy {
     font-size: 24px;

@@ -11,6 +11,8 @@ import AboutArticle from '../containers/AboutArticle';
 import Article from '../containers/Article';
 import AboutIssue from '../containers/AboutIssue';
 import Issue from '../containers/Issue';
+import IssuePre from '../containers/Issue/pre.vue'
+import Answer from '../containers/Answer';
 
 // const Home = r => require.ensure([], () => r(require('/containers/Home/Home.vue')))
 // const Find = resolve => require.ensure(['../containers/Find/index.vue'], resolve);
@@ -72,6 +74,16 @@ const router = new Router({
     {
       path: '/issue/:id',
       component: Issue,
+      children: [
+        {
+          path: '',
+          component: IssuePre,
+        },
+        {
+          path: 'answer/:answerId',
+          component: Answer,
+        }
+      ]
     },
   ],
 });

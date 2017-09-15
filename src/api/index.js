@@ -157,7 +157,7 @@ let contentData = [
     content: '赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？赏金猎人的技能也不厉害啊，为什么都不嫌呢？',
     attentionNum: 0,
     praiseNum: 0,
-    answerNum: 0,
+    answerNum: 2,
   },
 ]
 let commentData = [
@@ -169,6 +169,7 @@ let commentData = [
     },
     type: 1,
     createTime: createTime++,
+    updateTime: +new Date(),
     content: '你说的真好',
     praiseNum: 100,
     discussNum: 2,
@@ -203,6 +204,7 @@ let commentData = [
     },
     type: 1,
     createTime: createTime++,
+    updateTime: +new Date(),
     content: '你说的真好*2',
     praiseNum: 100,
     discussNum: 2,
@@ -226,6 +228,76 @@ let commentData = [
         type: 3,
         createTime: createTime++,
         content: '我也来了！',
+      },
+    ],
+  },
+  {
+    id: 3,
+    author: {
+      id: 1,
+      name: 'wxy'
+    },
+    type: 2,
+    createTime: createTime++,
+    updateTime: +new Date(),
+    content: '我是问题评论1',
+    praiseNum: 100,
+    discussNum: 2,
+    discuss: [
+      {
+        id: 15,
+        author: {
+          id: 1,
+          name: 'wxy',
+        },
+        type: 3,
+        createTime: createTime++,
+        content: '我真的不能再赞同你了',
+      },
+      {
+        id: 16,
+        author: {
+          id: 1,
+          name: 'wxy',
+        },
+        type: 3,
+        createTime: createTime++,
+        content: '我是第二个！',
+      },
+    ],
+  },
+  {
+    id: 4,
+    author: {
+      id: 1,
+      name: 'wxy'
+    },
+    type: 2,
+    createTime: createTime++,
+    updateTime: +new Date(),
+    content: '我是问题评论2',
+    praiseNum: 100,
+    discussNum: 2,
+    discuss: [
+      {
+        id: 17,
+        author: {
+          id: 1,
+          name: 'wxy',
+        },
+        type: 3,
+        createTime: createTime++,
+        content: '我真的不能再赞同你了',
+      },
+      {
+        id: 18,
+        author: {
+          id: 1,
+          name: 'wxy',
+        },
+        type: 3,
+        createTime: createTime++,
+        content: '我是第二个！',
       },
     ],
   },
@@ -338,6 +410,9 @@ export default {
       }
     }
     item.comment = deepCopy(commentData);
+    item.comment = item.comment.filter(the => {
+      return the.type === item.type;
+    })
     return {
       data: item,
     }
@@ -347,29 +422,35 @@ export default {
   // comment相关
   addComment(comment) {
     commentId++;
+    let data = {
+      id: commentId,
+      target: comment.target,
+      author: {
+        id: comment.authorId,
+      },
+      type: comment.type,
+      createTime: +new Date(),
+      content: comment.content,
+      discuss:[],
+      pariseNum: 0,
+    }
+    if (data.type !== 3) {
+      data.discussNum = 0;
+    }
     return {
-      data: {
-        id: commentId,
-        target: comment.target,
-        author: {
-          id: comment.authorId,
-        },
-        type: comment.type,
-        createTime: +new Date(),
-        content: comment.content,
-        discuss:[],
-        pariseNum: 0,
-      }
+      data,
     }
   },
 
   getOneComment(id) {
+    console.log(id);
     let item;
     for (let i = 0, len = commentData.length; i < len; i++) {
       if (commentData[i].id == id) {
         item = deepCopy(commentData[i]);
       }
     }
+    console.log(item)
     return {
       data: item,
     }

@@ -26,5 +26,5 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   --字体大小-标准: 36px;
   --字体大小-较大: 48px;
   --字体大小-较小: 24px;
-  --背景: rgba(60, 47, 65, .2);
+  --背景: rgba(60, 47, 65, .1);
 }
