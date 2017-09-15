@@ -48,9 +48,41 @@
       </div>
     </div>
     <div :class="$style.discuss">
-      <Discuss v-for="item in discuss" :key='item.id' :discuss='item' />
+      <Discuss v-for="item in discuss" :key='item.id' :discuss='item' @select='handleSelect'/>
     </div>
     <Gap />
+    <div :class="$style.someaction">
+      <div :class="$style.writeDiscuss" @click='handleWriteComment'>
+        <i class="el-icon-edit" :class='$style.icon'></i>
+        <input type="text" name="comment" v-model='myComment.content' placeholder="说点什么..." :class='$style.input'>
+      </div>
+      <div :class="$style.right">
+
+      </div>
+    </div>
+    <MyMask v-if='isOpenOptions' @handleClose='handleCloseMask'>
+      <div :class="$style.optionsList">
+        <ItemGroup>
+          <Item>
+            <div :class="$style.itemBox" @click='hanldeWriteDiscuss'>
+              <div :class="$style.itemText">
+                回复
+              </div>
+            </div>
+          </Item>
+          <Item>
+            <div :class="$style.itemBox">
+              <div :class="$style.itemText">
+                赞
+              </div>
+            </div>
+          </Item>
+        </ItemGroup>
+      </div>
+    </MyMask>
+    <div v-if='isWriteComment'>
+      <Comment :content='myComment.content' @handleClose='handleCloseWriteComment' @edit='edit' @handlePublish='handlePublish'></Comment>
+    </div>
   </div>
 </template>
 
@@ -60,6 +92,10 @@ import { mapState } from 'vuex';
 import Editor from '../../components/Editor';
 import Discuss from '../../components/Discuss';
 import Gap from '../../components/Gap';
+import Comment from '../Article/comment.vue';
+import MyMask from '../../components/MyMask';
+import Item from '../../components/Item';
+import ItemGroup from '../../components/Item/ItemGroup.vue';
 
 import 'vue-awesome/icons/eye';
 import 'vue-awesome/icons/user-plus';
@@ -74,6 +110,10 @@ export default {
     faicon,
     Discuss,
     Gap,
+    Comment,
+    MyMask,
+    Item,
+    ItemGroup,
   },
   created() {
     this.getAnswer();
@@ -82,6 +122,14 @@ export default {
     return {
       id: Number(this.$route.params.answerId),
       issueId: Number(this.$route.params.id),
+      myComment: {
+        content: '',
+        authorId: this.$store.state.member.id,
+        type: 3,
+        target: Number(this.$route.params.answerId),
+      },
+      isWriteComment: false,
+      isOpenOptions: false,
     }
   },
   computed: {
@@ -119,6 +167,36 @@ export default {
       const { state, dispatch } = this.$store;
       dispatch('getOneComment', id);
     },
+    handleWriteComment() {
+      this.isWriteComment = true;
+    },
+    handleCloseWriteComment() {
+      this.isWriteComment = false;
+    },
+    edit(newContent) {
+      this.myComment.content = newContent;
+    },
+    handlePublish() {
+      console.log('发表评论');
+      const { dispatch } = this.$store;
+      let comment = {
+        ...this.myComment,
+      }
+      if (comment.content.trim() !== '') {
+          dispatch('addDiscuss', comment);
+      }
+      this.myComment.content = '';
+    },
+    hanldeWriteDiscuss() {
+      this.isOpenOptions = false;
+      this.isWriteComment = true;
+    },
+    handleSelect(selectId) {
+      this.isOpenOptions = true;
+    },
+    handleCloseMask() {
+      this.isOpenOptions = false;
+    }
   }
 };
 </script>
@@ -128,6 +206,7 @@ export default {
 .answerWrapper {
   composes: fullScreen from "../../commenStyle/layout.css";
   background-color: #fff;
+  padding-bottom: 80px;
 }
 .title {
   background-color: var(--主题色);
@@ -218,5 +297,50 @@ export default {
 }
 .discuss {
   padding: 0 30px;
+}
+
+.someaction {
+  display: flex;
+  position: fixed;
+  padding: 15px 30px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  box-shadow: 0 2px 15px 1px #aaa;
+  z-index: 1600;
+  background-color: #fff;
+}
+.right {
+  display: flex;
+  flex: 0 0 50%;
+}
+.writeDiscuss {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #eee;
+}
+.input {
+  margin: 0 10px;
+  font-size: 25px;
+  outline: none;
+}
+.icon {
+  font-size: 30px;
+}
+.optionsList {
+  background-color: #fff;
+}
+.itemBox {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+.itemText {
+  flex: 1;
+  margin: 0 30px;
+  font-size: var(--字体大小-标准);
 }
 </style>

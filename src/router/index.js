@@ -12,6 +12,7 @@ import Article from '../containers/Article';
 import AboutIssue from '../containers/AboutIssue';
 import Issue from '../containers/Issue';
 import IssuePre from '../containers/Issue/pre.vue'
+import aboutAnswer from '../containers/AboutAnswer';
 import Answer from '../containers/Answer';
 
 // const Home = r => require.ensure([], () => r(require('/containers/Home/Home.vue')))
@@ -78,6 +79,10 @@ const router = new Router({
         {
           path: '',
           component: IssuePre,
+        },
+        {
+          path: 'writeAnswer/',
+          component: aboutAnswer,
         },
         {
           path: 'answer/:answerId',

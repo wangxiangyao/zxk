@@ -1,19 +1,16 @@
 <template>
-  <div :class="$style.aboutIssue">
+  <div :class="$style.aboutAnswer">
     <TopBar>
       <div :class="$style.theText" slot='center'>
         <div :class="$style.text">
-          提问
+          撰写回答
         </div>
       </div>
       <div :class="$style.ok" slot='right' @click='handleSave'>
         <faicon name='check' scale='3' />
       </div>
     </TopBar>
-    <div :class="$style.title">
-      <textarea type="text" name="title" v-model="issue.title" :class="$style.myTitle" placeholder="请输入问题..." />
-    </div>
-    <editor @change="handleChange" placeholder='对问题的补充...'/>
+    <editor @change="handleChange" placeholder='开始回答...'/>
   </div>
 </template>
 
@@ -21,15 +18,15 @@
 import editor from '../../components/Editor'
 import TopBar from '../../components/TopBar'
 
+
 import 'vue-awesome/icons/check';
 import faicon from 'vue-awesome/components/Icon';
 
 export default {
-  name: 'aboutIssue',
+  name: 'aboutAnswer',
   data() {
     return {
-      issue: {
-        title: '',
+      answer: {
         content: '',
       }
     }
@@ -41,35 +38,25 @@ export default {
   },
   methods: {
     handleChange(value, render)  {
-      this.issue.content = value;
+      this.answer.content = value;
     },
     handleSave() {
       const { dispatch, state } = this.$store;
-      if (this.issue.title.trim() === '') {
-        console.log('标题未空，无法保存，应提示失败了')
-        return;
-      }
-      if (!(this.issue.title.endsWith('？') || this.issue.title.endsWith('?'))) {
-        this.issue.title += '？';
-      }
-      let theIssue = {
+      let theAnswer = {
         authorId: state.member.id,
-        title: this.issue.title,
-        content: this.issue.content,
+        content: this.answer.content,
+        target: Number(this.$route.params.id),
       }
-      dispatch('addIssue', theIssue);
+      dispatch('addComment', theAnswer);
       this.$router.back();
     },
   },
-  created() {
-
-  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style module>
-  .aboutIssue {
+  .aboutAnswer {
     composes: fullScreen from "../../commenStyle/layout.css";
     background-color: #fff;
     display: flex;

@@ -32,7 +32,7 @@
     </div>
     <div class="commentWrapper">
       <template v-if='comment.type === 1'>
-        <div :class="$style.comment">
+        <div :class="$style.comment" @click='handleSelect'>
           {{comment.content}}
         </div>
       </template>
@@ -84,6 +84,9 @@ export default {
         dispatch('getOneComment', this.comment.id);
       }
       this.isOpenDiscuss = !this.isOpenDiscuss;
+    },
+    handleSelect() {
+      this.$emit('select', this.comment.id);
     }
   },
   props: {
@@ -129,7 +132,7 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 30px;
-  border-bottom: 1px solid var(--分割线);
+  border-bottom: 2px solid rgba(155, 144, 194, .8);
 }
 .top {
   display: flex;

@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="discussContentWrapper">
-      <div :class="$style.discussContent">
+      <div :class="$style.discussContent" @click='handleSelect'>
         {{discuss.content}}
       </div>
     </div>
@@ -38,8 +38,8 @@ export default {
     }
   },
   methods: {
-    handleClickIssueComment() {
-      console.log('请求此回答详细信息', comment.id);
+    handleSelect() {
+      this.$emit('select', this.discuss.id)
     }
   },
   props: {

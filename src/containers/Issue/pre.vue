@@ -67,7 +67,7 @@
             邀请回答
           </div>
         </div>
-        <div :class="$style.writeAnswer">
+        <div :class="$style.writeAnswer" @click='handleWriteAnswer'>
           <faicon name='paint-brush' scale='3' />
           <div :class="$style.text">
             写回答
@@ -164,6 +164,9 @@ export default {
   methods: {
     handleToggleIssueContent() {
       this.isOpen = !this.isOpen;
+    },
+    handleWriteAnswer() {
+      this.$router.push(`/issue/${this.issue.id}/writeAnswer/`);
     }
   }
 };

@@ -41,7 +41,7 @@
         </div>
       </div>
       <div :class="$style.commentsList">
-        <PreComment :comment='comment' v-for='comment in comments' :key='comment.id'/>
+        <PreComment :comment='comment' v-for='comment in comments' @select='handleSelect' :key='comment.id'/>
       </div>
     </div>
     <div :class="$style.action">
@@ -60,6 +60,26 @@
         </div>
       </div>
     </div>
+    <MyMask v-if='isOpenOptions' @handleClose='handleCloseMask'>
+      <div :class="$style.optionsList">
+        <ItemGroup>
+          <Item>
+            <div :class="$style.itemBox" @click='hanldeWriteDiscuss'>
+              <div :class="$style.itemText">
+                回复
+              </div>
+            </div>
+          </Item>
+          <Item>
+            <div :class="$style.itemBox">
+              <div :class="$style.itemText">
+                赞
+              </div>
+            </div>
+          </Item>
+        </ItemGroup>
+      </div>
+    </MyMask>
     <div v-if='isWriteComment'>
       <Comment :content='myComment.content' @handleClose='handleCloseWriteComment' @edit='edit' @handlePublish='handlePublish'></Comment>
     </div>
@@ -78,6 +98,9 @@ import 'vue-awesome/icons/bookmark-o';
 import faicon from 'vue-awesome/components/Icon';
 import Comment from './comment.vue';
 import PreComment from '../../components/PreComment';
+import MyMask from '../../components/MyMask';
+import Item from '../../components/Item';
+import ItemGroup from '../../components/Item/ItemGroup.vue';
 
 export default {
   name: 'article',
@@ -88,6 +111,9 @@ export default {
     faicon,
     Comment,
     PreComment,
+    MyMask,
+    Item,
+    ItemGroup,
   },
   created() {
     this.getArticle();
@@ -97,11 +123,12 @@ export default {
       id: Number(this.$route.params.id),
       myComment: {
         authorId: this.$store.state.member.id,
-        target: Number(this.$route.params.id),
         content: '',
-        type: 1,
       },
+      selectTarget: Number(this.$route.params.id),
+      currentCommentType: 1,
       isWriteComment: false,
+      isOpenOptions: false,
     }
   },
   computed: {
@@ -139,6 +166,8 @@ export default {
     },
     handleCloseWriteComment() {
       this.isWriteComment = false;
+      this.selectTarget = Number(this.$route.params.id);
+      this.currentCommentType = 1;
     },
     edit(newContent) {
       this.myComment.content = newContent;
@@ -146,7 +175,35 @@ export default {
     handlePublish() {
       console.log('发表评论');
       const { dispatch } = this.$store;
-      dispatch('addComment', this.myComment);
+      let comment = {
+        ...this.myComment,
+        type: this.currentCommentType,
+        target: this.selectTarget,
+      }
+      if (comment.content.trim() !== '') {
+        if (comment.type === 1) {
+          dispatch('addComment', comment);
+        } else if (comment.type === 3) {
+          dispatch('addDiscuss', comment);
+        }
+      }
+      this.selectTarget = Number(this.$route.params.id);
+      this.currentCommentType = 1;
+      this.myComment.content = '';
+    },
+    hanldeWriteDiscuss() {
+      this.isOpenOptions = false;
+      this.isWriteComment = true;
+    },
+    handleSelect(selectId) {
+      this.selectTarget = selectId;
+      this.currentCommentType = 3;
+      this.isOpenOptions = true;
+    },
+    handleCloseMask() {
+      this.isOpenOptions = false;
+      this.selectTarget = Number(this.$route.params.id);
+      this.currentCommentType = 1;
     }
   }
 };
@@ -277,5 +334,19 @@ export default {
   }
   .soltBy {
     font-size: 24px;
+  }
+
+  .optionsList {
+    background-color: #fff;
+  }
+  .itemBox {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+  .itemText {
+    flex: 1;
+    margin: 0 30px;
+    font-size: var(--字体大小-标准);
   }
 </style>

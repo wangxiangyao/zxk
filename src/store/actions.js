@@ -113,6 +113,19 @@ export const discussReceive = ({ state, commit }, discuss) => {
       }
       item.author = item.author.id;
     })
+   } else if (typeof discuss === 'object') {
+    console.log('接收到的是对象discuss')
+    author = {};
+    if (discuss.target) {
+      console.log('添加到comment中')
+      state.comment.byId[discuss.target].discuss.unshift(discuss.id);
+    }
+    if (discuss.author.id !== -1) {
+      author = {
+        ...discuss.author,
+      }
+    }
+    discuss.author = discuss.author.id;
   }
   commit('MEMBER_RECEIVE', author);
   commit('DISCUSS_RECEIVE', discuss);

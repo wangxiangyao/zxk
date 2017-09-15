@@ -431,11 +431,11 @@ export default {
       type: comment.type,
       createTime: +new Date(),
       content: comment.content,
-      discuss:[],
       pariseNum: 0,
     }
     if (data.type !== 3) {
       data.discussNum = 0;
+      data.discuss = [];
     }
     return {
       data,
