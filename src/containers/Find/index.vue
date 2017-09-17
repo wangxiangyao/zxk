@@ -41,6 +41,7 @@ import MyTitle from '../../components/MyTitle';
 import PreArticle from '../../components/PreArticle';
 import PreIssue from '../../components/PreIssue';
 import Swiper from 'swiper/dist/js/swiper.min.js';
+import Scroll from '../../components/scroll';
 require('swiper/dist/css/swiper.min.css')
 
 import { mapState } from 'vuex';
@@ -54,6 +55,7 @@ export default {
     MyTitle,
     PreArticle,
     PreIssue,
+    Scroll,
   },
   data() {
     return {
