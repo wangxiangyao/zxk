@@ -99,6 +99,7 @@ export default {
     padding: 20px;
     font-size: 28px;
     border-bottom: 1px solid #e5e5e5;
+    background-color: #fff;
   }
   .left {
     display: flex;

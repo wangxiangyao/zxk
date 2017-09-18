@@ -21,6 +21,14 @@ export default {
     const { member } = this.$store;
     console.log(member)
   },
+  beforeDestroyed() {
+
+    const { member } = this.$store.state;
+    console.log(member)
+    alert('123')
+    let zxkMember = JSON.stringify(member)
+    window.localStorage.setItem('zxkMember', zxkMember);
+  }
 };
 </script>
 

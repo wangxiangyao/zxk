@@ -1,38 +1,40 @@
 <template>
-  <div class="find">
-    <div class="swiper">
-      <!-- Slider main container -->
-      <div class="swiper-container">
-          <!-- Additional required wrapper -->
-          <div class="swiper-wrapper">
-              <!-- Slides -->
-              <div class="swiper-slide">Slide 1</div>
-              <div class="swiper-slide">Slide 2</div>
-              <div class="swiper-slide">Slide 3</div>
-          </div>
-          <!-- If we need pagination -->
-          <div class="swiper-pagination"></div>
+  <Scroll ref='scroll' :data='content' :pullDownRefresh='pullDownRefreshObj' @pullingDown='onPullingDown'>
+    <div class="find">
+      <div class="swiper">
+        <!-- Slider main container -->
+        <div class="swiper-container">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <div class="swiper-slide">Slide 1</div>
+                <div class="swiper-slide">Slide 2</div>
+                <div class="swiper-slide">Slide 3</div>
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      <Gap />
+      <div class="hot">
+        <MyTitle text="精选推荐"></MyTitle>
+        <div class="list">
+          <template v-for='item in soltByCreateTime'>
+            <template v-if='content[item].type === 1'>
+              <PreArticle :article='content[item]'></PreArticle>
+            </template>
+            <template v-else-if='content[item].type === 2'>
+              <PreIssue :issue='content[item]'></PreIssue>
+            </template>
+          </template>
+        </div>
+      </div>
+      <Gap />
+      <div class="latest">
+        时间排序文章
       </div>
     </div>
-    <Gap />
-    <div class="hot">
-      <MyTitle text="精选推荐"></MyTitle>
-      <div class="list">
-        <template v-for='item in soltByCreateTime'>
-          <template v-if='content[item].type === 1'>
-            <PreArticle :article='content[item]'></PreArticle>
-          </template>
-          <template v-else-if='content[item].type === 2'>
-            <PreIssue :issue='content[item]'></PreIssue>
-          </template>
-        </template>
-      </div>
-    </div>
-    <Gap />
-    <div class="latest">
-      时间排序文章
-    </div>
-  </div>
+  </Scroll>
 </template>
 
 <script>
@@ -59,13 +61,22 @@ export default {
   },
   data() {
     return {
+      pullDownRefresh: true,
+      pullDownRefreshThreshold: 90,
+      pullDownRefreshStop: 60,
     };
   },
   computed: {
     ...mapState({
       content: state => state.content.byId,
       soltByCreateTime: state => state.content.byCreateTime,
-    })
+    }),
+    pullDownRefreshObj: function () {
+      return this.pullDownRefresh ? {
+        threshold: parseInt(this.pullDownRefreshThreshold),
+        stop: parseInt(this.pullDownRefreshStop)
+      } : false
+    },
   },
   created() {
     const { dispatch } = this.$store
@@ -78,7 +89,12 @@ export default {
     })
   },
   methods: {
-
+    onPullingDown() {
+      // 模拟更新数据
+      setTimeout(() => {
+        this.$refs.scroll.forceUpdate()
+      }, 1000)
+    },
   }
 };
 </script>
@@ -87,6 +103,7 @@ export default {
 <style>
   .swiper .swiper-slide {
     height: 500px;
+    background-color: #fff;
   }
   .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
     margin: 0 10px;

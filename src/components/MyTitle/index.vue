@@ -24,6 +24,7 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 20px 20px;
+    background-color: #fff;
   }
   .text {
     color: var(--主题色);

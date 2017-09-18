@@ -84,7 +84,12 @@ export default {
 
     handleLogin() {
       // 请求api.memberLogin
-      this.$router.push("find")
+      // const { dispatch } = this.$store;
+      // dispatch('login', {
+      //   phone: this.phone,
+      //   verificationCode: this.verificationCode,
+      // })
+      this.$router.push('find')
     }
   }
 };

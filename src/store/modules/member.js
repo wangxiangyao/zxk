@@ -8,13 +8,13 @@ import router from '../../router';
 import { normalizeDataObj, normalizeDataArr } from '../tool.js';
 
 function initMember() {
-  let member = localStorage.getItem('zxkMember')
+  let member = localStorage.getItem('zxkMe')
   if (member) {
     return JSON.parse(member)
   } else {
     return {
       id: -1,
-      phone: '13213195318',
+      phone: '',
       nickname: '',
       name: '',
       unit: '',
@@ -51,12 +51,16 @@ const getters = {
 const actions = {
   login({ commit, state }, user) {
     let data;
-    data = api.memberLogin();
-    if (data) {
-      commit(MEMBER_LOGIN_SUCCESS, { data });
-    } else {
-      commit(MEMBER_LOGIN_RE);
-    }
+    data = api.memberLogin(user);
+    api.memberLogin().then((json) => {
+      console.log(json)
+      if (json.code === 200) {
+        let data = json.data
+        commit(MEMBER_LOGIN_SUCCESS, { data });
+      } else {
+        commit(MEMBER_LOGIN_RE);
+      }
+    })
   },
 };
 
@@ -64,7 +68,12 @@ const mutations = {
   [MEMBER_LOGIN_SUCCESS](state, { user }) {
     state = { ...state, ...user };
     console.log(state)
-    router.push('/home')
+    let me = {
+      phone: state.phone,
+      id: state.id,
+    }
+    window.localStorage.setItem('zxkMe', me);
+    router.push('/find')
   },
   [MEMBER_LOGIN_RE]() {
     router.push('/login')

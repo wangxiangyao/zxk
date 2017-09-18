@@ -312,7 +312,8 @@ export default {
   memberLogin(user) {
     // 返回对象，表示验证未过期
     // 返回false，表示要重新登录
-    return fetch('member/login/', user, 'POST');
+    console.log(user);
+    return fetch('/member/login/', user, 'POST');
   },
   memberGetVfc(phone) {
     // 请求验证码
