@@ -51,8 +51,7 @@ const getters = {
 const actions = {
   login({ commit, state }, user) {
     let data;
-    data = api.memberLogin(user);
-    api.memberLogin().then((json) => {
+    api.memberLogin(user).then((json) => {
       console.log(json)
       if (json.code === 200) {
         let data = json.data
