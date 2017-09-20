@@ -105,6 +105,8 @@ const getters = {
 };
 
 const actions = {
+  // TODO: publishArticle
+
   addArticle({ state, commit, dispatch }, article) {
     if (state.isFetching) {
       return
@@ -113,6 +115,7 @@ const actions = {
     let res = api.addArticle(article);
     console.log(res);
     dispatch('contentReceive', res.data);
+    router.push(`/contentDetail/article/${res.data.id}`)
   },
   getOneArticle({ state, commit, dispatch }, id) {
     commit('ARTICLE_REQUEST_SOMEONE');
@@ -127,6 +130,7 @@ const actions = {
     commit('ISSUE_ADD');
     let res = api.addIssue(issue);
     dispatch('contentReceive', res.data);
+    router.push(`/contentDetail/issue/${res.data.id}`)
   },
   getOneIssue({ state, commit, dispatch}, id) {
     commit('ISSUE_REQUEST_SOMEONE');

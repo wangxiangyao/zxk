@@ -7,11 +7,17 @@
         </div>
           <i class="el-icon-arrow-down" v-if="isAdd" :class="$style.icon"></i>
       </div>
+      <div :class="$style.ok" slot='right' @click='handleSave'>
+        <faicon name='check' scale='3' />
+      </div>
     </TopBar>
+    <div :class="$style.tools">
+      <publishType position='左下' @changePublishType='handleChangePublishType' />
+    </div>
     <div :class="$style.title">
       <textarea type="text" name="title" v-model="article.title" rows="2" :class="$style.myTitle" placeholder="请输入标题..." />
     </div>
-    <editor @save="handleSave"/>
+    <editor @change="handleChange"/>
     <MyMask v-if='isAdd && showMask' position="top">
       <div :class="$style.pickTarget">
         <div :class="$style.text">
@@ -37,7 +43,11 @@
 import editor from '../../components/Editor'
 import TopBar from '../../components/TopBar'
 import MyMask from '../../components/MyMask'
+import publishType from '../../components/PublishType';
 import { mapState } from 'vuex'
+
+import 'vue-awesome/icons/check';
+import faicon from 'vue-awesome/components/Icon';
 
 export default {
   name: 'aboutArticle',
@@ -50,6 +60,7 @@ export default {
       article: {
         title: '',
         content: '',
+        publishType: this.$store.state.member.defaultPublishType,
       }
     }
   },
@@ -62,6 +73,8 @@ export default {
     editor,
     TopBar,
     MyMask,
+    faicon,
+    publishType,
   },
   methods: {
     handleAddAnthology() {
@@ -86,7 +99,10 @@ export default {
       }
       this.showMask = !this.showMask;
     },
-    handleSave(value, render) {
+    handleChange(value, render) {
+      this.article.content = value;
+    },
+    handleSave() {
       const { dispatch, state } = this.$store;
       console.log(state)
       if (this.article.title.trim() === '') {
@@ -96,11 +112,13 @@ export default {
       let theArticle = {
         authorId: state.member.id,
         anthologyId: this.anthology.id,
-        title: this.article.title,
-        content: value,
+        ...this.article,
       }
       dispatch('addArticle', theArticle);
     },
+    handleChangePublishType(type) {
+      this.article.publishType = type;
+    }
   },
   created() {
     console.log(this.$route);
@@ -206,5 +224,21 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .ok {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: var(--主题色);
+  }
+
+  .tools {
+    display: flex;
+    padding: 10px 30px;
+    justify-content: flex-end;
+    border-bottom: 2px solid var(--分割线);
   }
 </style>

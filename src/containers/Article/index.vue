@@ -2,17 +2,7 @@
   <div :class="$style.article">
     <TopBar></TopBar>
     <div :class="$style.author">
-      <div :class="$style.avator">
-
-      </div>
-      <div :class="$style.info">
-        <div :class="$style.name">
-          {{author.name}}
-        </div>
-        <div :class="$style.publishTime">
-          {{createTime}}
-        </div>
-      </div>
+      <User :user='author' :publishTime='article.createTime'  />
       <div :class="$style.authorAction">
         <div :class="$style.focus">
           关注
@@ -101,6 +91,7 @@ import PreComment from '../../components/PreComment';
 import MyMask from '../../components/MyMask';
 import Item from '../../components/Item';
 import ItemGroup from '../../components/Item/ItemGroup.vue';
+import User from '../../components/User';
 
 export default {
   name: 'article',
@@ -114,6 +105,7 @@ export default {
     MyMask,
     Item,
     ItemGroup,
+    User,
   },
   created() {
     this.getArticle();
@@ -149,11 +141,6 @@ export default {
       })
       return arr;
     },
-    createTime() {
-      let time = new Date(this.article.createTime);
-      let timeText = `${time.getFullYear()}年${time.getMonth()}月${time.getDate()}日 ${time.getHours()}点${time.getMinutes()}分`;
-      return timeText;
-    }
   },
   methods: {
     getArticle() {
@@ -172,13 +159,14 @@ export default {
     edit(newContent) {
       this.myComment.content = newContent;
     },
-    handlePublish() {
+    handlePublish(publishType) {
       console.log('发表评论');
       const { dispatch } = this.$store;
       let comment = {
         ...this.myComment,
         type: this.currentCommentType,
         target: this.selectTarget,
+        publishType,
       }
       if (comment.content.trim() !== '') {
         if (comment.type === 1) {
@@ -220,29 +208,14 @@ export default {
     display: flex;
     align-items: center;
     height: 100px;
+    padding: 0 30px;
     border-bottom: 2px solid #e5e5e5;
-  }
-  .avator {
-    width: 60px;
-    height: 60px;
-    margin: 0 20px;
-    background-color: #ccc;
-    border-radius: 50%;
-  }
-  .name {
-    font-size: 32px;
-  }
-  .publishTime {
-    font-size: 24px;
-    margin-top: 6px;
-    color: var(--次要);
   }
   .authorAction {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     flex: 1;
-    padding: 0 20px;
     height: 100%;
   }
   .focus {

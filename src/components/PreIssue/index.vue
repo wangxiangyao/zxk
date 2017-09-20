@@ -2,15 +2,7 @@
   <div class="pre-issue" @click='handleClick'>
     <div class="left">
       <div class="author">
-        <div class="avator">
-
-        </div>
-        <div class="name">
-          {{members[issue.author].name}}
-        </div>
-        <div class="publish-time">
-          {{this.createTime}}
-        </div>
+        <User :user='author' :publishTime='issue.createTime' :timeType='2' />
       </div>
       <div class="title">
         <Type :type='type' :styleType='2'></Type>
@@ -45,11 +37,13 @@
 import Type from '../ContentType';
 import { mapState } from 'vuex';
 import router from '../../router';
+import User from '../User';
 
 export default {
   name: 'preIssue',
   components: {
     Type,
+    User,
   },
   data() {
     return {
@@ -69,9 +63,9 @@ export default {
     issue: Object,
   },
   computed: {
-    ...mapState({
-      members: state => state.member.byId,
-    }),
+    author() {
+      return this.$store.state.member.byId[this.issue.author];
+    },
     createTime: function() {
       let createTime = this.issue.createTime;
       let timepass = this.currentTime - createTime;
@@ -102,6 +96,7 @@ export default {
     padding: 20px;
     font-size: 28px;
     border-bottom: 1px solid #e5e5e5;
+    background-color: #fff;
   }
   .left {
     display: flex;

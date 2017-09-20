@@ -10,6 +10,9 @@
         <faicon name='check' scale='3' />
       </div>
     </TopBar>
+    <div :class="$style.tools">
+      <publishType position='左下' @changePublishType='handleChangePublishType' />
+    </div>
     <editor @change="handleChange" placeholder='开始回答...'/>
   </div>
 </template>
@@ -17,6 +20,7 @@
 <script>
 import editor from '../../components/Editor'
 import TopBar from '../../components/TopBar'
+import publishType from '../../components/PublishType';
 
 
 import 'vue-awesome/icons/check';
@@ -28,6 +32,7 @@ export default {
     return {
       answer: {
         content: '',
+        publishType: this.$store.state.member.defaultPublishType,
       }
     }
   },
@@ -35,6 +40,7 @@ export default {
     editor,
     TopBar,
     faicon,
+    publishType,
   },
   methods: {
     handleChange(value, render)  {
@@ -42,14 +48,25 @@ export default {
     },
     handleSave() {
       const { dispatch, state } = this.$store;
+      if (this.answer.content.trim() === '') {
+        // content为空，不做操作
+        return
+      }
       let theAnswer = {
         authorId: state.member.id,
         content: this.answer.content,
+        type: 2,
         target: Number(this.$route.params.id),
+        publishType: this.answer.publishType,
       }
+      console.log(theAnswer);
       dispatch('addComment', theAnswer);
       this.$router.back();
     },
+    handleChangePublishType(type) {
+      console.log(type)
+      this.answer.publishType = type;
+    }
   },
 };
 </script>
@@ -90,5 +107,10 @@ export default {
     width: 100%;
     height: 100%;
     color: var(--主题色);
+  }
+  .tools {
+    display: flex;
+    padding: 10px 30px;
+    justify-content: flex-end;
   }
 </style>

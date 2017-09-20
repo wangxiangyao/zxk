@@ -2,15 +2,7 @@
   <div class="pre-article" @click='handleClick'>
     <div class="left">
       <div class="author">
-        <div class="avator">
-
-        </div>
-        <div class="name">
-          {{members[article.author].name}}
-        </div>
-        <div class="publish-time">
-          {{this.createTime}}
-        </div>
+        <User :user='author' :publishTime='article.createTime' :timeType='2' />
       </div>
       <div class="title">
         <Type :type='type' :styleType='1'></Type>
@@ -43,11 +35,13 @@
 import Type from '../ContentType';
 import { mapState } from 'vuex';
 import router from '../../router';
+import User from '../User';
 
 export default {
   name: 'preArticle',
   components: {
     Type,
+    User,
   },
   data() {
     return {
@@ -66,27 +60,8 @@ export default {
     article: Object,
   },
   computed: {
-    ...mapState({
-      members: state => state.member.byId,
-    }),
-    createTime: function() {
-      let createTime = this.article.createTime;
-      let timepass = this.currentTime - createTime;
-      let timeText = '';
-      if (timepass < 60000) {
-        let s = Math.floor(timepass / 1000)
-        timeText = `${s} 秒前`;
-      } else if (timepass < 3600000) {
-        let m = Math.floor(timepass / 1000 / 60);
-        timeText = `${m} 分钟前`;
-      } else if (timepass < 86400000) {
-        let h = Math.floor(timepass / 1000 / 3600);
-        timeText = `${h} 小时前`;
-      } else {
-        let time = new Date(createTime);
-        timeText += time.getFullYear() + '年' + time.getMonth() + '月' + time.getDate() + '日';
-      }
-      return timeText;
+    author() {
+      return this.$store.state.member.byId[this.article.author];
     },
   }
 };
@@ -111,20 +86,6 @@ export default {
     display: flex;
     align-items: center;
   }
-  .avator {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #ccc;
-  }
-  .name {
-    padding: 0 20px;
-  }
-  .publish-time {
-    font-size: 20px;
-    color: var(--次要);
-  }
-
   .title {
     display: flex;
     align-items: center;

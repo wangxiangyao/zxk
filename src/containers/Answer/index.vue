@@ -5,24 +5,7 @@
       {{issueTitle}}
     </div>
     <div :class="$style.author">
-      <div :class="$style.avator"></div>
-      <div :class="$style.authorInfo">
-        <div :class="$style.name">
-          wxy
-          <div :class="$style.publishTime">
-            {{createTime}}
-          </div>
-        </div>
-        <div :class="$style.trueInfo">
-          <div :class="$style.trueName">
-            王相尧
-          </div>
-          <div class="unit">
-            栾川县电业局
-          </div>
-
-        </div>
-      </div>
+      <User :user='author' :publishTime='answer.createTime' :style='{flex: 1}'/>
       <div :class="$style.action">
         <div :class="$style.focus">
           关注
@@ -96,6 +79,7 @@ import Comment from '../Article/comment.vue';
 import MyMask from '../../components/MyMask';
 import Item from '../../components/Item';
 import ItemGroup from '../../components/Item/ItemGroup.vue';
+import User from '../../components/User';
 
 import 'vue-awesome/icons/eye';
 import 'vue-awesome/icons/user-plus';
@@ -114,6 +98,7 @@ export default {
     MyMask,
     Item,
     ItemGroup,
+    User,
   },
   created() {
     this.getAnswer();
@@ -149,11 +134,6 @@ export default {
         arr.push(allDiscuss[discussId]);
       })
       return arr;
-    },
-    createTime() {
-      let time = new Date(this.answer.createTime);
-      let timeText = `${time.getFullYear()}年${time.getMonth()}月${time.getDate()}日 ${time.getHours()}点${time.getMinutes()}分`;
-      return timeText;
     },
     editTime() {
       let time = new Date(this.answer.updateTime);
@@ -220,36 +200,6 @@ export default {
   align-items: center;
   padding: 30px;
   border-bottom: 2px solid var(--分割线);
-}
-.authorInfo {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  font-size: 24px;
-  margin-left: 10px;
-}
-.avator {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #ccc;
-}
-.name {
-  display: flex;
-  margin-bottom: 5px;
-}
-.publishTime {
-  display: flex;
-  align-items: flex-end;
-  color: var(--次要);
-  font-size: 20px;
-  margin-left: 10px;
-}
-.trueInfo {
-  display: flex;
-}
-.trueName {
-  margin-right: 10px;
 }
 .action {
   display: flex;

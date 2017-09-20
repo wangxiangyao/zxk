@@ -14,7 +14,6 @@ export default {
     return {
       toolbars: {
         imagelink: true,
-        save: true,
         preview: true,
         bold: true,
         italic: true,

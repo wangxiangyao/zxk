@@ -14,6 +14,7 @@ import Issue from '../containers/Issue';
 import IssuePre from '../containers/Issue/pre.vue'
 import aboutAnswer from '../containers/AboutAnswer';
 import Answer from '../containers/Answer';
+import ContentDetail from '../containers/ContentDetail';
 
 // const Home = r => require.ensure([], () => r(require('/containers/Home/Home.vue')))
 // const Find = resolve => require.ensure(['../containers/Find/index.vue'], resolve);
@@ -89,6 +90,10 @@ const router = new Router({
           component: Answer,
         }
       ]
+    },
+    {
+      path: '/contentDetail/:type/:id',
+      component: ContentDetail,
     },
   ],
 });

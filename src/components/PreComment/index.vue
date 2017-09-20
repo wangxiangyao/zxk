@@ -1,24 +1,7 @@
 <template>
   <div :class="$style.preComment">
     <div :class="$style.top">
-      <div :class="$style.avator"></div>
-      <div :class="$style.authorInfo">
-        <div :class="$style.name">
-          wxy
-          <div :class="$style.publishTime">
-            {{createTime}}
-          </div>
-        </div>
-        <div :class="$style.trueInfo">
-          <div :class="$style.trueName">
-            王相尧
-          </div>
-          <div class="unit">
-            栾川县电业局
-          </div>
-
-        </div>
-      </div>
+      <User :user='author' :publishTime='comment.createTime' :timeType='2' :style='{flex: 1}' />
       <div :class="$style.action">
         <div :class="$style.icon">
           <faicon name='comment-o' scale='2' ></faicon>
@@ -60,6 +43,7 @@ import 'vue-awesome/icons/thumbs-o-up';
 import faicon from 'vue-awesome/components/Icon';
 import Editor from '../Editor';
 import Discuss from '../Discuss';
+import User from '../User'
 
 export default {
   name: 'preComment',
@@ -67,6 +51,7 @@ export default {
     faicon,
     Editor,
     Discuss,
+    User,
   },
   data() {
     return {
@@ -94,6 +79,9 @@ export default {
     issueId: Number,
   },
   computed: {
+    author() {
+      return this.$store.state.member.byId[this.comment.author];
+    },
     discuss() {
       const { discuss } = this.$store.state;
       console.log(discuss);
@@ -102,25 +90,6 @@ export default {
         arr.push(discuss.byId[discussId]);
       })
       return arr;
-    },
-    createTime: function() {
-      let createTime = this.comment.createTime;
-      let timepass = this.currentTime - createTime;
-      let timeText = '';
-      if (timepass < 60000) {
-        let s = Math.floor(timepass / 1000)
-        timeText = `${s} 秒前`;
-      } else if (timepass < 3600000) {
-        let m = Math.floor(timepass / 1000 / 60);
-        timeText = `${m} 分钟前`;
-      } else if (timepass < 86400000) {
-        let h = Math.floor(timepass / 1000 / 3600);
-        timeText = `${h} 小时前`;
-      } else {
-        let time = new Date(createTime);
-        timeText += time.getFullYear() + '年' + time.getMonth() + '月' + time.getDate() + '日';
-      }
-      return timeText;
     },
   }
 };
@@ -137,30 +106,6 @@ export default {
 .top {
   display: flex;
   align-items: center;
-}
-.authorInfo {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  font-size: 24px;
-  margin-left: 10px;
-}
-.name {
-  display: flex;
-  margin-bottom: 5px;
-}
-.publishTime {
-  display: flex;
-  align-items: flex-end;
-  color: var(--次要);
-  font-size: 20px;
-  margin-left: 10px;
-}
-.trueInfo {
-  display: flex;
-}
-.trueName {
-  margin-right: 10px;
 }
 .action {
   display: flex;

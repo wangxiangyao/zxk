@@ -31,6 +31,7 @@ function initMember() {
       getPraiseNum: -1,
       articleNum: -1,
       anthology: [],
+      defaultPublishType: 1,
       byId: {
         '-1': {
           id: -1,

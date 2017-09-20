@@ -10,6 +10,9 @@
         <faicon name='check' scale='3' />
       </div>
     </TopBar>
+    <div :class="$style.tools">
+      <publishType position='左下' @changePublishType='handleChangePublishType' />
+    </div>
     <div :class="$style.title">
       <textarea type="text" name="title" v-model="issue.title" :class="$style.myTitle" placeholder="请输入问题..." />
     </div>
@@ -20,6 +23,7 @@
 <script>
 import editor from '../../components/Editor'
 import TopBar from '../../components/TopBar'
+import publishType from '../../components/PublishType';
 
 import 'vue-awesome/icons/check';
 import faicon from 'vue-awesome/components/Icon';
@@ -31,6 +35,7 @@ export default {
       issue: {
         title: '',
         content: '',
+        publishType: this.$store.state.member.defaultPublishType,
       }
     }
   },
@@ -38,6 +43,7 @@ export default {
     editor,
     TopBar,
     faicon,
+    publishType,
   },
   methods: {
     handleChange(value, render)  {
@@ -56,9 +62,14 @@ export default {
         authorId: state.member.id,
         title: this.issue.title,
         content: this.issue.content,
+        publishType:this.issue.publishType,
       }
+      console.log(theIssue);
       dispatch('addIssue', theIssue);
-      this.$router.back();
+    },
+    handleChangePublishType(type) {
+      console.log(type)
+      this.issue.publishType = type;
     },
   },
   created() {
@@ -103,5 +114,11 @@ export default {
     width: 100%;
     height: 100%;
     color: var(--主题色);
+  }
+  .tools {
+    display: flex;
+    padding: 10px 30px;
+    justify-content: flex-end;
+    border-bottom: 2px solid var(--分割线);
   }
 </style>

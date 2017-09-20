@@ -7,7 +7,7 @@
         </div>
         <div :class="$style.action">
           <div :class="$style.tools">
-
+            <publishType position='左上' @changePublishType='handleChangePublishType'></publishType>
           </div>
           <div :class="$style.publish">
             <div :class="$style.publishBtn">
@@ -23,12 +23,14 @@
 <script>
 import MyMask from '../../components/MyMask';
 import myButton from '../../components/MyButton';
+import publishType from '../../components/PublishType';
 
 export default {
   name: 'comment',
   components: {
     MyMask,
     myButton,
+    publishType,
   },
   props: {
     content: String,
@@ -38,7 +40,8 @@ export default {
       theContent: this.content,
       btnStyle: {
         fontSize: '24px',
-      }
+      },
+      publishType: this.$store.state.member.defaultPublishType,
     }
   },
   methods: {
@@ -46,8 +49,11 @@ export default {
       this.$emit('handleClose');
     },
     handlePublish() {
-      this.$emit('handlePublish', this.theContent);
+      this.$emit('handlePublish', this.publishType);
       this.handleClose();
+    },
+    handleChangePublishType(type) {
+      this.publishType = type;
     }
   },
   watch: {
@@ -87,6 +93,11 @@ export default {
     flex: none;
     padding: 0 30px;
     height: 30%;
+  }
+  .tools {
+    display: flex;
+    padding: 0 30px;
+    align-items: center;
   }
   .publishBtn {
     flex: none;
