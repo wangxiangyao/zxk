@@ -80,6 +80,7 @@ export default {
   },
   created() {
     const { dispatch } = this.$store
+    console.log('刚进入find页面', this.$store.state.member)
     dispatch('fetchContentIfNeeded');
   },
   mounted() {

@@ -1,6 +1,7 @@
 import {
   ARTICLE_ADD,
   ARTICLE_RECEIVE,
+  ARTICLE_PUBLISH,
   ISSUE_ADD,
   ISSUE_REQUEST_SOMEONE,
   CONTENT_REQUEST,
@@ -36,14 +37,12 @@ function soltByCreateTime(state) {
 
   let all = [...state.all],
       byId = state.byId;
-      console.log(all, byId);
 
   sort(0, all.length - 1);
   state.byCreateTime = all;
   return;
 
   function sort(left, right) {
-    console.log(all);
     let i = left,
         j = right,
         stardard = all[left];
@@ -112,15 +111,29 @@ const actions = {
       return
     }
     commit('ARTICLE_ADD');
-    let res = api.addArticle(article);
-    console.log(res);
-    dispatch('contentReceive', res.data);
-    router.push(`/contentDetail/article/${res.data.id}`)
+    api.addArticle(article)
+      .then((json => {
+        console.log(json);
+        dispatch('contentReceive', json.data);
+        router.push({path: `/contentDetail/article/${json.data.id}`, query: {publishType: article.publishType}})
+      }))
+
+  },
+  publishArticle({ state, commit, dispatch}, option) {
+    commit('ARTICLE_PUBLISH')
+    api.publishArticle(option)
+      .then((json => {
+        dispatch('contentReceive', json.data);
+        router.push('/find');
+      }))
   },
   getOneArticle({ state, commit, dispatch }, id) {
     commit('ARTICLE_REQUEST_SOMEONE');
-    let res = api.getOneContent(id);
-    dispatch('contentReceive', res.data);
+    console.log(id)
+    api.getOneContent(id)
+      .then((json) => {
+        dispatch('contentReceive', json.data);
+      })
   },
 
   addIssue({ state, commit, dispatch}, issue) {
@@ -128,14 +141,20 @@ const actions = {
       return
     }
     commit('ISSUE_ADD');
-    let res = api.addIssue(issue);
-    dispatch('contentReceive', res.data);
-    router.push(`/contentDetail/issue/${res.data.id}`)
+    api.addIssue(issue)
+      .then((json) => {
+        if (json.code === 200) {
+          dispatch('contentReceive', json.data);
+          router.push(`/contentDetail/issue/${json.data.id}`)
+        }
+      })
   },
   getOneIssue({ state, commit, dispatch}, id) {
     commit('ISSUE_REQUEST_SOMEONE');
-    let res = api.getOneContent(id);
-    dispatch('contentReceive', res.data);
+    api.getOneContent(id)
+      .then((json) => {
+        dispatch('contentReceive', json.data);
+      })
   },
 
   fetchContentIfNeeded({ state, dispatch }) {
@@ -150,14 +169,21 @@ const actions = {
   fetchContent({ state, commit, dispatch }) {
     commit('CONTENT_REQUEST');
     console.log('请求content')
-    let res = api.fetchContent();
-    console.log(res)
-    dispatch('contentReceive', res.data);
+    api.fetchContent()
+      .then((json) => {
+        if (json.code === 200) {
+          console.log(json)
+          dispatch('contentReceive', json.data.content);
+        }
+      })
   }
 };
 
 const mutations = {
   [ARTICLE_ADD](state) {
+    state.isFetching = true;
+  },
+  [ARTICLE_PUBLISH](state) {
     state.isFetching = true;
   },
   [ARTICLE_REQUEST_SOMEONE](state) {

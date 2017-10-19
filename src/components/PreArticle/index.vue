@@ -15,13 +15,13 @@
           所属类别
         </div>
         <div class="read">
-          阅读 {{article.readNum}}
+          阅读 {{article.readNum || '0'}}
         </div>
         <div class="like">
-          喜欢 {{article.praiseNum}}
+          喜欢 {{article.praiseNum || '0'}}
         </div>
         <div class="comment">
-          收藏 {{article.collectNum}}
+          收藏 {{article.collectNum || '0'}}
         </div>
       </div>
     </div>
@@ -51,9 +51,10 @@ export default {
   },
   methods: {
     handleClick() {
+      const { dispatch } = this.$store
+
       let id = this.article.id;
-      let url = `/Article/${id}`;
-      router.push(url);
+      this.$router.push(`/article/${id}`);
     }
   },
   props: {

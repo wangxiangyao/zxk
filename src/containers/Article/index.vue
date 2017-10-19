@@ -112,12 +112,12 @@ export default {
   },
   data() {
     return {
-      id: Number(this.$route.params.id),
+      id: this.$route.params.id,
       myComment: {
         authorId: this.$store.state.member.id,
         content: '',
       },
-      selectTarget: Number(this.$route.params.id),
+      selectTarget: this.$route.params.id,
       currentCommentType: 1,
       isWriteComment: false,
       isOpenOptions: false,
@@ -128,7 +128,12 @@ export default {
       return this.$store.state.content.byId[this.id];
     },
     author() {
-      return this.$store.state.member.byId[this.article.author];
+      if (this.article) {
+        return this.$store.state.member.byId[this.article.author];
+      } else {
+        return ''
+      }
+
     },
     anthology() {
       return this.$store.state.anthology.byId[this.article.anthology];
@@ -153,7 +158,7 @@ export default {
     },
     handleCloseWriteComment() {
       this.isWriteComment = false;
-      this.selectTarget = Number(this.$route.params.id);
+      this.selectTarget = this.$route.params.id;
       this.currentCommentType = 1;
     },
     edit(newContent) {
@@ -175,7 +180,7 @@ export default {
           dispatch('addDiscuss', comment);
         }
       }
-      this.selectTarget = Number(this.$route.params.id);
+      this.selectTarget = this.$route.params.id;
       this.currentCommentType = 1;
       this.myComment.content = '';
     },
@@ -190,7 +195,7 @@ export default {
     },
     handleCloseMask() {
       this.isOpenOptions = false;
-      this.selectTarget = Number(this.$route.params.id);
+      this.selectTarget = this.$route.params.id;
       this.currentCommentType = 1;
     }
   }

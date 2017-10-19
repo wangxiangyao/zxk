@@ -56,10 +56,10 @@ export default {
         authorId: state.member.id,
         content: this.answer.content,
         type: 2,
-        target: Number(this.$route.params.id),
+        target: this.$route.params.id,
         publishType: this.answer.publishType,
       }
-      console.log(theAnswer);
+      console.log(theAnswer, this.$route.params);
       dispatch('addComment', theAnswer);
       this.$router.back();
     },

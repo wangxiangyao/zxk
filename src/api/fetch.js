@@ -1,8 +1,31 @@
-import { baseUrl } from './config';
+// let baseUrl = 'http://222.141.18.145:7001/api/v1';
+export let baseUrl = 'http://localhost:8080/api/v1' ;
 
-export default async (url = '', data = {}, type = "GET") => {
+
+// 解决内外网不互通的问题
+// const p = Promise.race([
+//   a('/test', {} , 'GET' ,'http://192.168.100.189/api/v1'),
+//   a('/test', {} , 'GET' ,'http://222.141.18.145:7001/api/v1')
+// ])
+// .then((json) => {
+//   console.log(json);
+//   let local = json.data.requestHost
+//   if (local.startsWith('192.168')) {
+//     baseUrl = 'http://192.168.100.189/api/v1'
+//   } else {
+//     baseUrl = 'http://222.141.18.145:7001/api/v1'
+//   }
+// })
+// .catch(error => console.log(error))
+
+
+async function a(url = '', data = {}, type = "GET", base) {
   type = type.toUpperCase();
-  url = baseUrl + url;
+  if (base) {
+    url = base + url;
+  } else {
+    url = baseUrl + url;
+  }
   console.log(url, type)
   if (type === 'GET') {
     let dataStr = '';
@@ -38,6 +61,12 @@ export default async (url = '', data = {}, type = "GET") => {
       const responseJson = await response.json()
       return responseJson
     } catch (error) {
+      let e = new Error(error)
+      console.log('捕获到错误', e.name, e.message)
+      if ( e.message === 'TypeError: Failed to fetch') {
+        console.log('更换url，重新fetch')
+        return 'change fetch';
+      }
       throw new Error(error)
     }
   } else {
@@ -75,3 +104,5 @@ export default async (url = '', data = {}, type = "GET") => {
     })
   }
 }
+
+export default a

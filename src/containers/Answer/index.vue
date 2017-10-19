@@ -105,13 +105,13 @@ export default {
   },
   data() {
     return {
-      id: Number(this.$route.params.answerId),
-      issueId: Number(this.$route.params.id),
+      id: this.$route.params.answerId,
+      issueId: this.$route.params.id,
       myComment: {
         content: '',
         authorId: this.$store.state.member.id,
         type: 3,
-        target: Number(this.$route.params.answerId),
+        target: this.$route.params.answerId,
       },
       isWriteComment: false,
       isOpenOptions: false,
@@ -122,7 +122,8 @@ export default {
       return this.$store.state.comment.byId[this.id];
     },
     issueTitle() {
-      return this.$store.state.content.byId[this.issueId].title;
+      let issue = this.$store.state.content.byId[this.issueId]
+      return issue ? issue.title : '' ;
     },
     author() {
       return this.$store.state.member.byId[this.answer.author];

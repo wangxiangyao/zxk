@@ -35,7 +35,7 @@
         </div>
       </div>
       <div :class="$style.title">
-        {{issue.title}}
+        {{issue.title || ''}}
       </div>
       <div :class="$style.issueContent" :style='issueContentStyle' ref='editWrapper'>
         <Editor ref='edit' :isRead='true' :value='issue.content'></Editor>
@@ -113,7 +113,7 @@ export default {
   },
   data() {
     return {
-      id: Number(this.$route.params.id),
+      id: this.$route.params.id,
       needOpenAndClose: false,
       isOpen: false,
     }
@@ -153,10 +153,10 @@ export default {
     issueContentStyle() {
       let obj = {}
       if (this.isOpen) {
-        obj.height = 'auto';
+        obj.maxHeight = 'auto';
         obj.paddingBottom = '88px';
       } else {
-        obj.height = '230px';
+        obj.maxHeight = '230px';
       }
       return obj;
     },

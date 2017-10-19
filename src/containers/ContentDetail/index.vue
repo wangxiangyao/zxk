@@ -70,13 +70,24 @@ export default {
   },
   methods: {
     handlePublish() {
+      const { dispatch } = this.$store
       // TODO: 关于内容所属话题，要派发 选择话题 的action
       // 逻辑：
       // 1. 判断是否选择话题，若果没有，提示，并失败
       // 2. 派发chooiseTopic的actionx，dispatch('chooiseTopic', {话题: 话题码})
       // 3. 在chooiseTopic的action成功后，如果是文章类型，直接发布。
       // 4. 请求成功后跳转到 /find
-      this.$router.push('/find')
+      if (this.contentType === 1) {
+        console.log('发布文章')
+        let option = {
+          id: this.id,
+          publishType: this.$route.query.publishType,
+        }
+        dispatch('publishArticle', option)
+      } else {
+        this.$router.push('/find')
+      }
+
     }
   }
 };

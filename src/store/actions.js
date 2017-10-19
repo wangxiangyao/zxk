@@ -9,6 +9,7 @@ import { normalizeDataObj, normalizeDataArr } from './tool.js';
 
 export const contentReceive = ({ state, commit, dispatch }, content) => {
   console.log('收到了content', content)
+  console.log('find页面', state)
   let author;
   let anthology;
   let comment;
@@ -93,6 +94,8 @@ export const commentReceive = ({ state, commit, dispatch }, comment) => {
         comment.discuss.push(item.id);
       })
       dispatch('discussReceive', discuss);
+    } else {
+      comment.discuss = [];
     }
   }
   commit('MEMBER_RECEIVE', author);
@@ -118,7 +121,9 @@ export const discussReceive = ({ state, commit }, discuss) => {
     author = {};
     if (discuss.target) {
       console.log('添加到comment中')
-      state.comment.byId[discuss.target].discuss.unshift(discuss.id);
+      let targetComment = state.comment.byId[discuss.target];
+      targetComment.discuss.unshift(discuss.id);
+      targetComment.discussNum = targetComment.discuss.length;
     }
     if (discuss.author.id !== -1) {
       author = {

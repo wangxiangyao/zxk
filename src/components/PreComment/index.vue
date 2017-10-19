@@ -76,7 +76,7 @@ export default {
   },
   props: {
     comment: Object,
-    issueId: Number,
+    issueId: String,
   },
   computed: {
     author() {

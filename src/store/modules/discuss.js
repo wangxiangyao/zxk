@@ -32,9 +32,10 @@ const actions = {
       return
     }
     commit('DISCUSS_ADD');
-    let res = api.addComment(discuss);
-    console.log(res)
-    dispatch('discussReceive', res.data);
+    api.addComment(discuss)
+      .then((json) => {
+        dispatch('discussReceive', json.data);
+      })
   },
 };
 

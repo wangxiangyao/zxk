@@ -2,6 +2,7 @@ import {
   MEMBER_LOGIN_SUCCESS,
   MEMBER_LOGIN_RE,
   MEMBER_RECEIVE,
+  MEMBER_LOGIN,
 } from '../mutation-types';
 import api from '../../api';
 import router from '../../router';
@@ -10,7 +11,17 @@ import { normalizeDataObj, normalizeDataArr } from '../tool.js';
 function initMember() {
   let member = localStorage.getItem('zxkMe')
   if (member) {
-    return JSON.parse(member)
+    return {
+      ...JSON.parse(member),
+      byId: {
+        '-1': {
+          id: -1,
+          name: '匿名',
+        },
+      },
+      all: [-1],
+      isFetching: false,
+    }
   } else {
     return {
       id: -1,
@@ -51,34 +62,52 @@ const getters = {
 
 const actions = {
   login({ commit, state }, user) {
+    commit(MEMBER_LOGIN);
     let data;
     api.memberLogin(user).then((json) => {
-      console.log(json)
-      if (json.code === 200) {
-        let data = json.data
-        commit(MEMBER_LOGIN_SUCCESS, { data });
+      if ( json === 'change fetch') {
+        api.memberLogin(user).then((json) => {
+          if (json.code == 200) {
+            let data = json.data
+            commit(MEMBER_LOGIN_SUCCESS, data);
+          } else {
+            commit(MEMBER_LOGIN_RE);
+          }
+        })
       } else {
-        commit(MEMBER_LOGIN_RE);
+        if (json.code == 200) {
+          let data = json.data
+          commit(MEMBER_LOGIN_SUCCESS, data);
+        } else {
+          commit(MEMBER_LOGIN_RE);
+        }
       }
     })
   },
 };
 
 const mutations = {
-  [MEMBER_LOGIN_SUCCESS](state, { user }) {
-    state = { ...state, ...user };
+  [MEMBER_LOGIN] (state) {
+    state.isFetching = true;
+  },
+  [MEMBER_LOGIN_SUCCESS](state, user) {
+    state.isFetching = false;
+    state = Object.assign(state, user)
     console.log(state)
     let me = {
       phone: state.phone,
       id: state.id,
+      defaultPublishType: state.defaultPublishType,
     }
-    window.localStorage.setItem('zxkMe', me);
+    window.localStorage.setItem('zxkMe', JSON.stringify(me));
+    state.isFetching = false;
     router.push('/find')
   },
   [MEMBER_LOGIN_RE]() {
     router.push('/login')
   },
   [MEMBER_RECEIVE](state, member) {
+    console.log(state);
     if (Array.isArray(member)) {
       state.needFetch = false;
       normalizeDataArr(state, member);
@@ -86,6 +115,7 @@ const mutations = {
     } else if (typeof member === 'object') {
       normalizeDataObj(state, member)
     }
+    console.log(member, state);
     state.isFetching = false;
   },
 };

@@ -33,14 +33,18 @@ const actions = {
       return
     }
     commit('COMMENT_ADD');
-    let res = api.addComment(comment);
-    console.log(res)
-    dispatch('commentReceive', res.data);
+    api.addComment(comment)
+      .then((json) => {
+        console.log(json, comment)
+        dispatch('commentReceive', json.data);
+      })
   },
   getOneComment({ state, commit, dispatch}, id) {
     commit('COMMENT_REQUEST_SOMEONE');
-    let res = api.getOneComment(id);
-    dispatch('commentReceive', res.data);
+    api.getOneComment(id)
+      .then((json) => {
+        dispatch('commentReceive', json.data);
+      })
   },
 };
 

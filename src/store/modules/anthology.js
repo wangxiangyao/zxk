@@ -37,8 +37,13 @@ const getters = {
 const actions = {
   fetchAnthology({ commit, state }, memberId) {
     commit('ANTHOLOGY_REQUEST');
-    let res = api.fetchAnthology(memberId);
-    commit('ANTHOLOGY_RECEIVE', res.data);
+    api.fetchAnthology(memberId)
+      .then((json) => {
+        if (json.code === 200) {
+          console.log(json)
+          commit('ANTHOLOGY_RECEIVE', json.data.anthologies);
+        }
+      })
   },
   fetchAnthologyIfNeeded({ state, dispatch }, memberId) {
     if (state.isFetching) {
@@ -52,9 +57,13 @@ const actions = {
       return
     }
     commit('ANTHOLOGY_ADD');
-    let res = api.addAnthology(anthology);
-    console.log(res)
-    commit('ANTHOLOGY_RECEIVE', res.data);
+    api.addAnthology(anthology)
+      .then((json) => {
+        if (json.code === 200) {
+          commit('ANTHOLOGY_RECEIVE', json.data);
+        }
+      })
+
   }
 };
 

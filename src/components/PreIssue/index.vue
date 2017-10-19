@@ -20,13 +20,13 @@
           所属类别
         </div>
         <div class="attention">
-          关注 {{issue.attentionNum}}
+          关注 {{issue.attentionNum || '0'}}
         </div>
         <div class="answer">
-          回答 {{issue.answerNum}}
+          回答 {{issue.answerNum || '0'}}
         </div>
         <div class="praise">
-          赞同 {{issue.praiseNum}}
+          赞同 {{issue.praiseNum || '0'}}
         </div>
       </div>
     </div>
@@ -137,7 +137,7 @@ export default {
     font-size: 48px;
   }
   .content-wrapper {
-    height: 80px;
+    max-height: 80px;
     padding: 0 20px;
     margin-bottom: 20px;
     overflow: hidden;
